@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TK999 Login Test</title>
+</head>
+<body>
+    <h1>TK999 Login Test</h1>
+    <p>If you can see this text, the React app did not load correctly.</p>
+    
+    <div id="root">
+        <p>If you see this text, the React app did not load correctly.</p>
+    </div>
+    
+    <script type="module">
+        // Import the main React app
+        import('./assets/index-CCamSkAb.js')
+            .then(() => {
+                console.log("React app loaded successfully");
+                document.body.innerHTML += "<p style='color: green;'>React app loaded successfully</p>";
+            })
+            .catch(error => {
+                console.error("Error loading React app:", error);
+                document.body.innerHTML += "<p style='color: red;'>Error loading React app: " + error.message + "</p>";
+            });
+    </script>
+</body>
+</html>

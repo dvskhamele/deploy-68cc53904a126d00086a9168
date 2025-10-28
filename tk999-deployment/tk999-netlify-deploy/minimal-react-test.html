@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Minimal Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        #test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        #root {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="test-container">
+        <h1>TK999 Minimal React Test</h1>
+        <p>This page tests if the React app mounts correctly.</p>
+        
+        <div id="root">
+            <p>React app should render here...</p>
+        </div>
+    </div>
+
+    <script>
+        // Simple test to see if React is working
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            const rootElement = document.getElementById('root');
+            if (rootElement) {
+                rootElement.innerHTML = '<p>DOM is ready. Waiting for React to mount...</p>';
+            }
+        });
+    </script>
+    
+    <!-- This is where the React app should load -->
+    <script type="module" crossorigin src="/assets/index-CCamSkAb.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CmJebkS1.css">
+</body>
+</html>

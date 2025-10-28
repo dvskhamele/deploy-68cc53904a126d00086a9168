@@ -1,0 +1,33 @@
+
+> tk999-monorepo@1.0.0 dev
+> concurrently "npm:dev:server" "npm:dev:client"
+
+[dev:client] 
+[dev:client] > tk999-monorepo@1.0.0 dev:client
+[dev:client] > npm run dev --prefix client
+[dev:client] 
+[dev:server] 
+[dev:server] > tk999-monorepo@1.0.0 dev:server
+[dev:server] > npm run dev --prefix server
+[dev:server] 
+[dev:server] 
+[dev:server] > server@1.0.0 dev
+[dev:server] > nodemon index.js
+[dev:server] 
+[dev:client] 
+[dev:client] > client@0.0.0 dev
+[dev:client] > vite
+[dev:client] 
+[dev:server] [33m[nodemon] 3.1.10[39m
+[dev:server] [33m[nodemon] to restart at any time, enter `rs`[39m
+[dev:server] [33m[nodemon] watching path(s): *.*[39m
+[dev:server] [33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[dev:server] [32m[nodemon] starting `node index.js`[39m
+[dev:client] 
+[dev:client]   VITE v7.1.5  ready in 174 ms
+[dev:client] 
+[dev:client]   ➜  Local:   http://localhost:5173/
+[dev:client]   ➜  Network: use --host to expose
+[dev:server] Server is running on http://localhost:3006
+[dev:client] npm run dev:client exited with code SIGTERM
+[dev:server] npm run dev:server exited with code SIGTERM

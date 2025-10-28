@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/* Global styles for the application */
+
+/* Base styles */
+body {
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(135deg, #f9fafb, #dbeafe);
+}
+
+/* Custom animations for floating elements */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Custom animations for glow effects */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+  100% { box-shadow: 0 0 5px currentColor; }
+}
+
+/* Custom animation for pulse effects */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+/* Additional utility classes */
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-border::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: inherit;
+  z-index: -1;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  animation: gradient-border-animation 4s ease infinite;
+}
+
+@keyframes gradient-border-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #5a67d8, #6b46c1);
+}
+
+/* Beautiful button styles */
+.stunning-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.stunning-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stunning-btn:focus {
+  outline: none;
+}
+
+.stunning-btn-primary {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+.stunning-btn-primary:hover {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+}
+
+.stunning-btn-secondary {
+  background: linear-gradient(90deg, #10b981, #0d9488);
+}
+
+.stunning-btn-secondary:hover {
+  background: linear-gradient(90deg, #059669, #0f766e);
+}
+
+/* Beautiful card styles */
+.stunning-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.stunning-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1) translateY(-0.25rem);
+}
+
+/* Beautiful typography */
+.stunning-gradient-text {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.stunning-gradient-bg {
+  background: linear-gradient(90deg, #eff6ff, #f5f3ff);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+/* Enhanced input fields */
+.stunning-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.stunning-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+}
+
+/* Enhanced select dropdowns */
+.stunning-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  appearance: none;
+}
+
+.stunning-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+}
+
+/* Enhanced textarea */
+.stunning-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.stunning-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+}
+
+/* Enhanced tooltip styles */
+.stunning-tooltip {
+  position: relative;
+}
+
+.stunning-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #1f2937;
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  opacity: 1;
+  visibility: visible;
+}
+
+.stunning-tooltip::after {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Enhanced modal styles */
+.stunning-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1rem;
+}
+
+.stunning-modal-content {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 48rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.stunning-modal-content.group-data-open-scale-100 {
+  transform: scale(1);
+}
+
+/* Enhanced notification styles */
+.stunning-notification {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.stunning-notification.success {
+  background: linear-gradient(90deg, #10b981, #059669);
+  color: white;
+}
+
+.stunning-notification.error {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+  color: white;
+}
+
+.stunning-notification.info {
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  color: white;
+}

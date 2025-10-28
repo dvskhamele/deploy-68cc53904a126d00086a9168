@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug TK999 JavaScript</title>
+</head>
+<body>
+    <h1>TK999 JavaScript Debug</h1>
+    <div id="debug-info"></div>
+    <div id="root"></div>
+
+    <script>
+        const debugInfo = document.getElementById('debug-info');
+        
+        // Try to load and execute the main JavaScript
+        const script = document.createElement('script');
+        script.src = '/assets/index-CCamSkAb.js';
+        script.onload = function() {
+            debugInfo.innerHTML += '<p style="color: green;">✅ Main JavaScript loaded</p>';
+            
+            // Check if React is available
+            setTimeout(() => {
+                if (window.React) {
+                    debugInfo.innerHTML += '<p style="color: green;">✅ React loaded</p>';
+                } else {
+                    debugInfo.innerHTML += '<p style="color: orange;">⚠️ React not in global scope</p>';
+                }
+                
+                // Check if the root has been populated
+                const root = document.getElementById('root');
+                if (root && root.innerHTML.trim() !== '') {
+                    debugInfo.innerHTML += '<p style="color: green;">✅ Root populated with content</p>';
+                    debugInfo.innerHTML += '<pre>' + root.innerHTML.substring(0, 200) + '...</pre>';
+                } else {
+                    debugInfo.innerHTML += '<p style="color: orange;">⚠️ Root element is empty</p>';
+                }
+            }, 2000);
+        };
+        script.onerror = function(e) {
+            debugInfo.innerHTML += '<p style="color: red;">❌ Failed to load main JavaScript: ' + e.message + '</p>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

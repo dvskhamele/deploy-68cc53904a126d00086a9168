@@ -1,0 +1,24 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './index.css'; // Ensure CSS is imported at the app level
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPageEnhanced'; // Use the enhanced dashboard
+import MatchesPage from './pages/MatchesPage';
+import UserProfilePage from './pages/UserProfilePage';
+import AdminPage from './pages/AdminPage';
+import SmartAssistant from './components/SmartAssistant';
+import LiveChat from './components/LiveChat';
+import DashboardTestPage from './pages/DashboardTestPage'; // Import the test page
+import MatchesFetcher from './components/MatchesFetcher'; // Import the new MatchesFetcher component
+
+const App: React.FC = () => {
+  return (
+    <div>
+      <h1>TK999 Betting App</h1>
+    </div>
+  );
+};
+
+export default App;

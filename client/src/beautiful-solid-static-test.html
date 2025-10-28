@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Solid Cards - Static Test</title>
+    <style>
+        /* Base Styles */
+        html, body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f7fa;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #1e40af;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card Styles */
+        .beautiful-solid-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            margin-bottom: 2rem;
+        }
+
+        .beautiful-solid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .beautiful-solid-card-header {
+            padding: 1.5rem;
+            background: #1d4ed8;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .beautiful-solid-card-body {
+            padding: 1.5rem;
+        }
+
+        /* Button Styles */
+        .beautiful-solid-btn {
+            padding: 0.875rem 1.75rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            letter-spacing: 0.25px;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            font-family: Poppins, sans-serif;
+            text-align: center;
+            min-width: 120px;
+            min-height: 44px;
+            color: white;
+            background: #2563eb;
+        }
+
+        .beautiful-solid-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .beautiful-solid-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .beautiful-solid-btn-primary {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+        }
+
+        .beautiful-solid-btn-primary:hover {
+            background: #1d4ed8;
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.6);
+        }
+
+        .beautiful-solid-btn-success {
+            background: #16a34a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+        }
+
+        .beautiful-solid-btn-success:hover {
+            background: #15803d;
+            box-shadow: 0 6px 15px rgba(22, 163, 74, 0.6);
+        }
+
+        /* Stats Card */
+        .beautiful-solid-stats-card {
+            background: #fff;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .beautiful-solid-stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .beautiful-solid-stats-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #2563eb;
+        }
+
+        .beautiful-solid-stats-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Beautiful Solid Cards - Static Test</h1>
+        <p class="text-center mb-4">This is a static HTML page to verify that our beautiful solid card styles are working correctly.</p>
+        
+        <!-- Stats Cards -->
+        <div class="grid">
+            <div class="beautiful-solid-stats-card">
+                <div class="beautiful-solid-stats-value">1,234</div>
+                <div class="beautiful-solid-stats-label">Total Users</div>
+            </div>
+            <div class="beautiful-solid-stats-card">
+                <div class="beautiful-solid-stats-value">56.7%</div>
+                <div class="beautiful-solid-stats-label">Win Rate</div>
+            </div>
+            <div class="beautiful-solid-stats-card">
+                <div class="beautiful-solid-stats-value">₹89,012</div>
+                <div class="beautiful-solid-stats-label">Total Bets</div>
+            </div>
+        </div>
+        
+        <!-- Main Card -->
+        <div class="beautiful-solid-card">
+            <div class="beautiful-solid-card-header">
+                Dashboard Overview
+            </div>
+            <div class="beautiful-solid-card-body">
+                <h2>Welcome to Your Dashboard</h2>
+                <p>This is a sample card using our beautiful solid design with no transparency.</p>
+                
+                <div class="mt-4">
+                    <button class="beautiful-solid-btn beautiful-solid-btn-primary">
+                        Get Started
+                    </button>
+                    <button class="beautiful-solid-btn beautiful-solid-btn-success mt-4">
+                        View Reports
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Another Card -->
+        <div class="beautiful-solid-card">
+            <div class="beautiful-solid-card-header">
+                Recent Activity
+            </div>
+            <div class="beautiful-solid-card-body">
+                <p>No recent activity to display.</p>
+                <button class="beautiful-solid-btn beautiful-solid-btn-primary">
+                    Refresh
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

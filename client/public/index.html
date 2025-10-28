@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TK999 - Betting App</title>
+    <script type="module" crossorigin src="./assets/index-CTgH1DqP.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CmJebkS1.css">
+    <style>
+      #debug-info {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 10000;
+        font-family: monospace;
+        font-size: 12px;
+        max-width: 300px;
+      }
+      #debug-info h3 {
+        margin: 0 0 5px 0;
+        color: #4CAF50;
+      }
+      #debug-info p {
+        margin: 2px 0;
+      }
+      #debug-info .error {
+        color: #f44336;
+      }
+      #debug-info .warning {
+        color: #ff9800;
+      }
+      #debug-info .success {
+        color: #4CAF50;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+        <h1>TK999 Betting App</h1>
+        <p>Loading React application...</p>
+        <div id="loading-spinner" style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p>If this message stays for more than 10 seconds, there may be a JavaScript error.</p>
+        <noscript>
+          <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin: 20px;">
+            <strong>JavaScript Required</strong>
+            <p>This application requires JavaScript to function. Please enable JavaScript in your browser.</p>
+          </div>
+        </noscript>
+      </div>
+    </div>
+    
+    <div id="debug-info">
+      <h3>Debug Info</h3>
+      <p id="js-status">JS: Loading...</p>
+      <p id="react-status">React: Waiting...</p>
+      <p id="mount-status">Mount: Not yet</p>
+    </div>
+    
+    <script>
+      // Debug logging
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('js-status').textContent = 'JS: DOM Loaded';
+        document.getElementById('js-status').className = 'success';
+      });
+      
+      // Monitor for React mounting
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList' && mutation.target.id === 'root') {
+            const rootChildren = document.getElementById('root').children;
+            if (rootChildren.length > 0) {
+              // Check if the loading message is still there
+              const hasLoadingMessage = Array.from(rootChildren).some(child => 
+                child.textContent.includes('Loading React application')
+              );
+              
+              if (!hasLoadingMessage) {
+                document.getElementById('mount-status').textContent = 'Mount: SUCCESS';
+                document.getElementById('mount-status').className = 'success';
+              }
+            }
+          }
+        });
+      });
+      
+      observer.observe(document.getElementById('root'), { childList: true, subtree: true });
+      
+      // Listen for JavaScript errors
+      window.addEventListener('error', function(event) {
+        document.getElementById('js-status').textContent = `JS: Error - ${event.message}`;
+        document.getElementById('js-status').className = 'error';
+      });
+    </script>
+  </body>
+</html>

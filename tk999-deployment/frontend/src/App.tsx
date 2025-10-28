@@ -1,0 +1,987 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './index.css'; // Ensure CSS is imported at the app level
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPageEnhanced'; // Use the enhanced dashboard
+import MatchesPage from './pages/MatchesPage';
+import UserProfilePage from './pages/UserProfilePage';
+import AdminPage from './pages/AdminPage';
+import SmartAssistant from './components/SmartAssistant';
+import LiveChat from './components/LiveChat';
+import DashboardTestPage from './pages/DashboardTestPage'; // Import the test page
+
+// Define types
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  role: 'user' | 'admin' | 'staff';
+  balance: number;
+  registrationDate: string;
+  lastLogin: string;
+  bettingPreferences: string[];
+  riskLevel: 'low' | 'medium' | 'high';
+  totalBets: number;
+  totalWins: number;
+  favoriteSports: string[];
+}
+
+interface Match {
+  id: number;
+  teamA: string;
+  teamB: string;
+  date: string;
+  odds: { [key: string]: number };
+  result: string | null;
+  category: string;
+  status: 'upcoming' | 'live' | 'finished';
+  liveScore?: { teamA: number; teamB: number };
+}
+
+interface Bet {
+  id: number;
+  userId: number;
+  matchId: number;
+  teamChosen: string;
+  amount: number;
+  status: 'Pending' | 'Won' | 'Lost';
+  date: string;
+  potentialWin: number;
+  odds: number;
+}
+
+interface Transaction {
+  id: number;
+  userId: number;
+  type: 'Deposit' | 'Withdrawal' | 'Bet' | 'Win' | 'Bonus' | 'Fee';
+  amount: number;
+  date: string;
+  description: string;
+  balanceAfter: number;
+}
+
+interface Notification {
+  id: number;
+  userId: number;
+  title: string;
+  message: string;
+  date: string;
+  read: boolean;
+  type: 'info' | 'success' | 'warning' | 'error';
+}
+
+interface Analytics {
+  totalUsers: number;
+  totalMatches: number;
+  totalBets: number;
+  totalBetAmount: number;
+  totalWins: number;
+  totalPayouts: number;
+  activeUsers: number;
+  popularSports: { sport: string; count: number }[];
+  revenue: number;
+}
+
+// Initial data
+const initialMatches: Match[] = [
+  {
+    id: 1,
+    teamA: 'Manchester United',
+    teamB: 'Liverpool',
+    date: new Date(Date.now() + 86400000).toISOString(),
+    odds: { 'Manchester United': 2.1, 'Liverpool': 1.8, Draw: 3.2 },
+    result: null,
+    category: 'Football',
+    status: 'upcoming'
+  },
+  {
+    id: 2,
+    teamA: 'India',
+    teamB: 'Australia',
+    date: new Date(Date.now() + 172800000).toISOString(),
+    odds: { 'India': 1.9, 'Australia': 1.9, Draw: 3.0 },
+    result: null,
+    category: 'Cricket',
+    status: 'upcoming'
+  },
+  {
+    id: 3,
+    teamA: 'Barcelona',
+    teamB: 'Real Madrid',
+    date: new Date(Date.now() + 259200000).toISOString(),
+    odds: { 'Barcelona': 2.5, 'Real Madrid': 1.6, Draw: 3.5 },
+    result: null,
+    category: 'Football',
+    status: 'upcoming'
+  },
+  {
+    id: 4,
+    teamA: 'Boston Celtics',
+    teamB: 'Los Angeles Lakers',
+    date: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
+    odds: { 'Boston Celtics': 1.7, 'Los Angeles Lakers': 2.2, Draw: 3.0 },
+    result: null,
+    category: 'Basketball',
+    status: 'upcoming',
+    liveScore: undefined
+  }
+];
+
+const App: React.FC = () => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [matches, setMatches] = useState<Match[]>(initialMatches);
+  const [bets, setBets] = useState<Bet[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [analytics, setAnalytics] = useState<Analytics>({
+    totalUsers: 0,
+    totalMatches: 0,
+    totalBets: 0,
+    totalBetAmount: 0,
+    totalWins: 0,
+    totalPayouts: 0,
+    activeUsers: 0,
+    popularSports: [],
+    revenue: 0
+  });
+  const [showAssistant, setShowAssistant] = useState(false);
+
+  // Load data from localStorage on app start
+  useEffect(() => {
+    const savedUser = localStorage.getItem('currentUser');
+    const savedMatches = localStorage.getItem('matches');
+    const savedBets = localStorage.getItem('bets');
+    const savedTransactions = localStorage.getItem('transactions');
+    const savedNotifications = localStorage.getItem('notifications');
+    const savedUsers = localStorage.getItem('users');
+
+    if (savedUser) {
+      setCurrentUser(JSON.parse(savedUser));
+    }
+    
+    if (savedMatches) {
+      setMatches(JSON.parse(savedMatches));
+    }
+    
+    if (savedBets) {
+      setBets(JSON.parse(savedBets));
+    }
+    
+    if (savedTransactions) {
+      setTransactions(JSON.parse(savedTransactions));
+    }
+    
+    if (savedNotifications) {
+      setNotifications(JSON.parse(savedNotifications));
+    }
+    
+    // Initialize analytics
+    if (savedUsers) {
+      const users = JSON.parse(savedUsers);
+      const activeUsers = users.filter((u: User) => 
+        new Date(u.lastLogin) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+      ).length;
+      
+      const totalBetAmount = savedBets ? 
+        JSON.parse(savedBets).reduce((sum: number, bet: Bet) => sum + bet.amount, 0) : 0;
+      
+      const totalPayouts = savedTransactions ? 
+        JSON.parse(savedTransactions)
+          .filter((tx: Transaction) => tx.type === 'Win')
+          .reduce((sum: number, tx: Transaction) => sum + tx.amount, 0) : 0;
+      
+      const revenue = totalBetAmount - totalPayouts;
+      
+      const sportsCount: { [key: string]: number } = {};
+      if (savedBets) {
+        JSON.parse(savedBets).forEach((bet: Bet) => {
+          const match = JSON.parse(savedMatches || '[]').find((m: Match) => m.id === bet.matchId);
+          if (match) {
+            sportsCount[match.category] = (sportsCount[match.category] || 0) + 1;
+          }
+        });
+      }
+      
+      const popularSports = Object.entries(sportsCount)
+        .map(([sport, count]) => ({ sport, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
+      
+      setAnalytics({
+        totalUsers: users.length,
+        totalMatches: savedMatches ? JSON.parse(savedMatches).length : 0,
+        totalBets: savedBets ? JSON.parse(savedBets).length : 0,
+        totalBetAmount,
+        totalWins: savedBets ? 
+          JSON.parse(savedBets).filter((bet: Bet) => bet.status === 'Won').length : 0,
+        totalPayouts,
+        activeUsers,
+        popularSports,
+        revenue
+      });
+    }
+  }, []);
+
+  // Save data to localStorage whenever state changes
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    localStorage.setItem('matches', JSON.stringify(matches));
+  }, [matches]);
+
+  useEffect(() => {
+    localStorage.setItem('bets', JSON.stringify(bets));
+  }, [bets]);
+
+  useEffect(() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }, [transactions]);
+
+  useEffect(() => {
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+  }, [notifications]);
+
+  // Auto-update match statuses
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMatches(prevMatches => 
+        prevMatches.map(match => {
+          const matchDate = new Date(match.date);
+          const now = new Date();
+          
+          // Update match status based on time
+          if (match.status === 'upcoming' && matchDate < now) {
+            // Start live matches randomly
+            if (Math.random() > 0.7) {
+              return {
+                ...match,
+                status: 'live',
+                liveScore: { teamA: 0, teamB: 0 }
+              };
+            }
+          } else if (match.status === 'live') {
+            // Randomly update live scores
+            if (Math.random() > 0.3) {
+              return {
+                ...match,
+                liveScore: {
+                  teamA: (match.liveScore?.teamA || 0) + Math.floor(Math.random() * 3),
+                  teamB: (match.liveScore?.teamB || 0) + Math.floor(Math.random() * 3)
+                }
+              };
+            }
+            
+            // End match randomly
+            if (Math.random() > 0.8 && match.liveScore) {
+              const winner = match.liveScore.teamA > match.liveScore.teamB ? 
+                match.teamA : 
+                match.liveScore.teamA < match.liveScore.teamB ? 
+                  match.teamB : 
+                  'Draw';
+              
+              // Send to all users who had bets on this match
+              const usersWithBets = JSON.parse(localStorage.getItem('users') || '[]');
+              const bettors = bets.filter(bet => bet.matchId === match.id);
+              
+              // Add a short delay to ensure notifications are created after bet processing
+              setTimeout(() => {
+                bettors.forEach(bet => {
+                  const user = usersWithBets.find((u: User) => u.id === bet.userId);
+                  if (user) {
+                    const isWinner = bet.teamChosen === winner;
+                    const userNotification: Notification = {
+                      id: Date.now() + bet.id,
+                      userId: user.id,
+                      title: isWinner ? '🎉 Bet Won!' : '📊 Bet Result',
+                      message: `${match.teamA} vs ${match.teamB} has finished! Result: ${winner}. Your bet on ${bet.teamChosen} ${isWinner ? `WON! You earned ${bet.potentialWin.toFixed(2)} BDT.` : 'was unsuccessful. Better luck next time!'}`,
+                      date: new Date().toISOString(),
+                      read: false,
+                      type: isWinner ? 'success' : 'info'
+                    };
+                    setNotifications(prev => [...prev, userNotification]);
+                  }
+                });
+                
+                // General notification for the match result
+                const generalNotification: Notification = {
+                  id: Date.now() + match.id,
+                  userId: 0, // Will be filtered out by individual users
+                  title: 'Match Finished',
+                  message: `${match.teamA} vs ${match.teamB} has finished with result: ${winner}`,
+                  date: new Date().toISOString(),
+                  read: false,
+                  type: winner === 'Draw' ? 'info' : 'success'
+                };
+                
+                // Only add general notification for current user if they had a bet
+                if (bettors.some(b => b.userId === currentUser?.id)) {
+                  setNotifications(prev => [...prev, generalNotification]);
+                }
+              }, 1000); // Add slight delay to ensure bets are processed first
+              
+              return {
+                ...match,
+                status: 'finished',
+                result: winner,
+                liveScore: undefined
+              };
+            }
+          }
+          
+          return match;
+        })
+      );
+    }, 10000); // Update every 10 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Process finished matches and update bets
+  useEffect(() => {
+    const finishedMatches = matches.filter(match => 
+      match.status === 'finished' && match.result
+    );
+    
+    finishedMatches.forEach(match => {
+      // Update bets for this match
+      const updatedBets = bets.map(bet => {
+        if (bet.matchId === match.id && bet.status === 'Pending') {
+          const isWinner = bet.teamChosen === match.result;
+          const newStatus = isWinner ? 'Won' as const : 'Lost' as const;
+          
+          // Send notification about bet result
+          const user = currentUser?.id === bet.userId ? currentUser : 
+                      JSON.parse(localStorage.getItem('users') || '[]')
+                        .find((u: User) => u.id === bet.userId);
+          
+          if (user) {
+            const resultMessage = isWinner ? 
+              `Congratulations! You won ${bet.potentialWin} BDT on your bet for ${bet.teamChosen} in ${match.teamA} vs ${match.teamB}` :
+              `Your bet on ${bet.teamChosen} in ${match.teamA} vs ${match.teamB} was unsuccessful. Better luck next time!`;
+              
+            const resultType = isWinner ? 'success' : 'info';
+              
+            const newNotification: Notification = {
+              id: Date.now(),
+              userId: user.id,
+              title: isWinner ? 'Bet Won!' : 'Bet Result',
+              message: resultMessage,
+              date: new Date().toISOString(),
+              read: false,
+              type: resultType
+            };
+            
+            setNotifications(prev => [...prev, newNotification]);
+          }
+          
+          return {
+            ...bet,
+            status: newStatus
+          };
+        }
+        return bet;
+      });
+      
+      if (JSON.stringify(updatedBets) !== JSON.stringify(bets)) {
+        setBets(updatedBets);
+        
+        // Process winning bets
+        updatedBets
+          .filter(bet => bet.matchId === match.id && bet.status === 'Won')
+          .forEach(bet => {
+            const user = currentUser;
+            if (user && user.id === bet.userId) {
+              const winAmount = bet.potentialWin;
+              
+              // Update user balance
+              const updatedUser = {
+                ...user,
+                balance: user.balance + winAmount,
+                totalWins: user.totalWins + 1
+              };
+              setCurrentUser(updatedUser);
+              
+              // Create transaction for winnings
+              const newTransaction: Transaction = {
+                id: Date.now(),
+                userId: user.id,
+                type: 'Win',
+                amount: winAmount,
+                date: new Date().toISOString(),
+                description: `Winnings from ${match.teamA} vs ${match.teamB}`,
+                balanceAfter: updatedUser.balance
+              };
+              
+              setTransactions(prev => [...prev, newTransaction]);
+            }
+          });
+      }
+    });
+  }, [matches, bets, currentUser]);
+
+  // Smart login function
+  const login = useCallback((email: string, password: string) => {
+    // For demo purposes, we'll use a simple check
+    if (email === 'admin@example.com' && password === 'admin123') {
+      const adminUser: User = {
+        id: 1,
+        name: 'Admin User',
+        email: 'admin@example.com',
+        phone: '1234567890',
+        role: 'admin',
+        balance: 10000,
+        registrationDate: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        bettingPreferences: ['Football', 'Cricket'],
+        riskLevel: 'medium',
+        totalBets: 0,
+        totalWins: 0,
+        favoriteSports: ['Football', 'Cricket']
+      };
+      setCurrentUser({...adminUser, lastLogin: new Date().toISOString()});
+      return { user: adminUser, token: 'admin-token' };
+    } else if (email === 'staff@example.com' && password === 'staff123') {
+      const staffUser: User = {
+        id: 2,
+        name: 'Staff User',
+        email: 'staff@example.com',
+        phone: '0987654321',
+        role: 'staff',
+        balance: 5000,
+        registrationDate: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        bettingPreferences: ['Basketball', 'Tennis'],
+        riskLevel: 'low',
+        totalBets: 0,
+        totalWins: 0,
+        favoriteSports: ['Basketball', 'Tennis']
+      };
+      setCurrentUser({...staffUser, lastLogin: new Date().toISOString()});
+      return { user: staffUser, token: 'staff-token' };
+    } else {
+      // Create a regular user if not exists
+      const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+      const existingUser = existingUsers.find((u: User) => u.email === email);
+      
+      if (existingUser) {
+        const updatedUser = {...existingUser, lastLogin: new Date().toISOString()};
+        setCurrentUser(updatedUser);
+        
+        // Update users in localStorage
+        const updatedUsers = existingUsers.map((u: User) => 
+          u.id === existingUser.id ? updatedUser : u
+        );
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+        
+        return { user: updatedUser, token: 'user-token' };
+      } else {
+        const newUser: User = {
+          id: Date.now(),
+          name: email.split('@')[0],
+          email,
+          phone: `+1${Math.floor(Math.random() * 1000000000)}`,
+          role: 'user',
+          balance: 1000, // Starting balance
+          registrationDate: new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+          bettingPreferences: [],
+          riskLevel: 'medium',
+          totalBets: 0,
+          totalWins: 0,
+          favoriteSports: []
+        };
+        
+        const updatedUsers = [...existingUsers, newUser];
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+        setCurrentUser(newUser);
+        return { user: newUser, token: 'user-token' };
+      }
+    }
+  }, []);
+
+  // Smart register function with auto-profile completion
+  const register = useCallback((name: string, email: string, phone: string) => {
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const existingUser = existingUsers.find((u: User) => u.email === email);
+    
+    if (existingUser) {
+      throw new Error('User already exists');
+    }
+    
+    // Smart profile completion based on email domain
+    let favoriteSports: string[] = [];
+    if (email.includes('football')) {
+      favoriteSports = ['Football'];
+    } else if (email.includes('cricket')) {
+      favoriteSports = ['Cricket'];
+    } else if (email.includes('basketball')) {
+      favoriteSports = ['Basketball'];
+    } else {
+      // Default popular sports
+      favoriteSports = ['Football', 'Cricket', 'Basketball'];
+    }
+    
+    const newUser: User = {
+      id: Date.now(),
+      name,
+      email,
+      phone,
+      role: 'user',
+      balance: 1000, // Starting balance with welcome bonus
+      registrationDate: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+      bettingPreferences: favoriteSports,
+      riskLevel: 'medium',
+      totalBets: 0,
+      totalWins: 0,
+      favoriteSports
+    };
+    
+    const updatedUsers = [...existingUsers, newUser];
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    setCurrentUser(newUser);
+    
+    // Welcome bonus transaction
+    const bonusTransaction: Transaction = {
+      id: Date.now(),
+      userId: newUser.id,
+      type: 'Bonus',
+      amount: 500,
+      date: new Date().toISOString(),
+      description: 'Welcome bonus',
+      balanceAfter: newUser.balance
+    };
+    
+    setTransactions(prev => [...prev, bonusTransaction]);
+    
+    // Welcome notification
+    const welcomeNotification: Notification = {
+      id: Date.now() + 1,
+      userId: newUser.id,
+      title: 'Welcome to TK999!',
+      message: 'You\'ve received a 500 BDT welcome bonus. Start betting now!',
+      date: new Date().toISOString(),
+      read: false,
+      type: 'success'
+    };
+    
+    setNotifications(prev => [...prev, welcomeNotification]);
+    
+    return { user: newUser, token: 'user-token' };
+  }, []);
+
+  const logout = useCallback(() => {
+    setCurrentUser(null);
+    localStorage.removeItem('currentUser');
+  }, []);
+
+  // Smart betting function with recommendations
+  const placeBet = useCallback((matchId: number, team: string, amount: number) => {
+    if (!currentUser) throw new Error('User not logged in');
+    
+    if (currentUser.balance < amount) {
+      throw new Error('Insufficient balance');
+    }
+    
+    const match = matches.find(m => m.id === matchId);
+    if (!match) throw new Error('Match not found');
+    
+    // Check if match has started
+    if (new Date(match.date) < new Date() && match.status !== 'live') {
+      throw new Error('Match has already started');
+    }
+    
+    // Smart betting limit based on user risk level
+    const maxBet = currentUser.riskLevel === 'low' ? 1000 : 
+                  currentUser.riskLevel === 'medium' ? 5000 : 10000;
+    
+    if (amount > maxBet) {
+      throw new Error(`Maximum bet for your risk level is ${maxBet} BDT`);
+    }
+    
+    // Deduct amount from user balance
+    const updatedUser = { 
+      ...currentUser, 
+      balance: currentUser.balance - amount,
+      totalBets: currentUser.totalBets + 1
+    };
+    setCurrentUser(updatedUser);
+    
+    // Get odds for selected team
+    const odds = match.odds[team];
+    const potentialWin = amount * odds;
+    
+    // Create bet
+    const newBet: Bet = {
+      id: Date.now(),
+      userId: currentUser.id,
+      matchId,
+      teamChosen: team,
+      amount,
+      status: 'Pending',
+      date: new Date().toISOString(),
+      potentialWin,
+      odds
+    };
+    
+    setBets(prev => [...prev, newBet]);
+    
+    // Create transaction
+    const newTransaction: Transaction = {
+      id: Date.now() + 1,
+      userId: currentUser.id,
+      type: 'Bet',
+      amount,
+      date: new Date().toISOString(),
+      description: `Bet on ${match.teamA} vs ${match.teamB} - ${team}`,
+      balanceAfter: updatedUser.balance
+    };
+    
+    setTransactions(prev => [...prev, newTransaction]);
+    
+    // Send immediate notification about the placed bet
+    const newNotification: Notification = {
+      id: Date.now() + 2,
+      userId: currentUser.id,
+      title: 'Bet Placed Successfully!',
+      message: `You placed a ${amount} BDT bet on ${team} in ${match.teamA} vs ${match.teamB} with odds of ${odds.toFixed(2)}. Potential win: ${potentialWin.toFixed(2)} BDT. Result will be available when the match finishes.`,
+      date: new Date().toISOString(),
+      read: false,
+      type: 'info'
+    };
+    
+    setNotifications(prev => [...prev, newNotification]);
+    
+    // Smart recommendation for next bet
+    setTimeout(() => {
+      const recommendedMatch = matches.find(m => 
+        m.id !== matchId && 
+        m.category === match.category &&
+        m.status === 'upcoming'
+      );
+      
+      if (recommendedMatch) {
+        const recommendationNotification: Notification = {
+          id: Date.now() + 3,
+          userId: currentUser.id,
+          title: 'Smart Recommendation',
+          message: `Based on your bet, you might also like to bet on ${recommendedMatch.teamA} vs ${recommendedMatch.teamB}`,
+          date: new Date().toISOString(),
+          read: false,
+          type: 'info'
+        };
+        
+        setNotifications(prev => [...prev, recommendationNotification]);
+      }
+    }, 2000);
+  }, [currentUser, matches]);
+
+  const deposit = useCallback((amount: number) => {
+    if (!currentUser) throw new Error('User not logged in');
+    
+    const updatedUser = { ...currentUser, balance: currentUser.balance + amount };
+    setCurrentUser(updatedUser);
+    
+    // Create transaction
+    const newTransaction: Transaction = {
+      id: Date.now(),
+      userId: currentUser.id,
+      type: 'Deposit',
+      amount,
+      date: new Date().toISOString(),
+      description: 'Deposit funds',
+      balanceAfter: updatedUser.balance
+    };
+    
+    setTransactions(prev => [...prev, newTransaction]);
+    
+    // Bonus for large deposits
+    if (amount >= 1000) {
+      const bonusAmount = Math.floor(amount * 0.1); // 10% bonus
+      const bonusUser = { ...updatedUser, balance: updatedUser.balance + bonusAmount };
+      setCurrentUser(bonusUser);
+      
+      const bonusTransaction: Transaction = {
+        id: Date.now() + 1,
+        userId: currentUser.id,
+        type: 'Bonus',
+        amount: bonusAmount,
+        date: new Date().toISOString(),
+        description: 'Deposit bonus',
+        balanceAfter: bonusUser.balance
+      };
+      
+      setTransactions(prev => [...prev, bonusTransaction]);
+      
+      const bonusNotification: Notification = {
+        id: Date.now() + 2,
+        userId: currentUser.id,
+        title: 'Bonus Received!',
+        message: `You received a ${bonusAmount} BDT bonus for your deposit!`,
+        date: new Date().toISOString(),
+        read: false,
+        type: 'success'
+      };
+      
+      setNotifications(prev => [...prev, bonusNotification]);
+    }
+  }, [currentUser]);
+
+  const withdraw = useCallback((amount: number) => {
+    if (!currentUser) throw new Error('User not logged in');
+    
+    if (currentUser.balance < amount) {
+      throw new Error('Insufficient balance');
+    }
+    
+    const updatedUser = { ...currentUser, balance: currentUser.balance - amount };
+    setCurrentUser(updatedUser);
+    
+    // Create transaction
+    const newTransaction: Transaction = {
+      id: Date.now(),
+      userId: currentUser.id,
+      type: 'Withdrawal',
+      amount,
+      date: new Date().toISOString(),
+      description: 'Withdraw funds',
+      balanceAfter: updatedUser.balance
+    };
+    
+    setTransactions(prev => [...prev, newTransaction]);
+  }, [currentUser]);
+
+  const updateMatchResult = useCallback((matchId: number, winner: string) => {
+    setMatches(prev => prev.map(match => 
+      match.id === matchId 
+        ? { ...match, result: winner, status: 'finished' } 
+        : match
+    ));
+  }, []);
+
+  const getUserDashboard = useCallback((userId: number) => {
+    console.log('getUserDashboard called with userId:', userId);
+    const userTransactions = transactions.filter(tx => tx.userId === userId);
+    const userBets = bets.filter(bet => bet.userId === userId);
+    const userNotifications = notifications.filter(notif => notif.userId === userId);
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    console.log('Users from localStorage:', users);
+    const user = users.find((u: User) => u.id === userId) || currentUser;
+    console.log('Found user:', user);
+    
+    const result = {
+      profile: user,
+      transactions: userTransactions,
+      bets: userBets,
+      notifications: userNotifications,
+      wallet: { balance: user?.balance || 0 }
+    };
+    console.log('getUserDashboard result:', result);
+    return result;
+  }, [transactions, bets, notifications, currentUser]);
+
+  const getAdminData = useCallback(() => {
+    const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    return {
+      matches,
+      users: allUsers,
+      bets,
+      transactions,
+      notifications
+    };
+  }, [matches, bets, transactions, notifications]);
+
+  // Smart analytics update
+  const updateAnalytics = useCallback(() => {
+    const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const activeUsers = allUsers.filter((u: User) => 
+      new Date(u.lastLogin) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    ).length;
+    
+    const totalBetAmount = bets.reduce((sum, bet) => sum + bet.amount, 0);
+    
+    const totalPayouts = transactions
+      .filter(tx => tx.type === 'Win')
+      .reduce((sum, tx) => sum + tx.amount, 0);
+    
+    const revenue = totalBetAmount - totalPayouts;
+    
+    const sportsCount: { [key: string]: number } = {};
+    bets.forEach(bet => {
+      const match = matches.find(m => m.id === bet.matchId);
+      if (match) {
+        sportsCount[match.category] = (sportsCount[match.category] || 0) + 1;
+      }
+    });
+    
+    const popularSports = Object.entries(sportsCount)
+      .map(([sport, count]) => ({ sport, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+    
+    setAnalytics({
+      totalUsers: allUsers.length,
+      totalMatches: matches.length,
+      totalBets: bets.length,
+      totalBetAmount,
+      totalWins: bets.filter(bet => bet.status === 'Won').length,
+      totalPayouts,
+      activeUsers,
+      popularSports,
+      revenue
+    });
+  }, [bets, matches, transactions]);
+
+  // Run analytics update when relevant data changes
+  useEffect(() => {
+    updateAnalytics();
+  }, [updateAnalytics]);
+
+  // Smart notification system
+  useEffect(() => {
+    if (!currentUser) return;
+    
+    // Send birthday bonus notification
+    const userRegDate = new Date(currentUser.registrationDate);
+    const today = new Date();
+    
+    if (userRegDate.getDate() === today.getDate() && 
+        userRegDate.getMonth() === today.getMonth() &&
+        userRegDate.getFullYear() !== today.getFullYear()) {
+      
+      const anniversaryNotification: Notification = {
+        id: Date.now(),
+        userId: currentUser.id,
+        title: 'Happy Anniversary!',
+        message: `Happy betting anniversary! Here's a 200 BDT bonus to celebrate!`,
+        date: new Date().toISOString(),
+        read: false,
+        type: 'success'
+      };
+      
+      setNotifications(prev => [...prev, anniversaryNotification]);
+      
+      // Add bonus
+      const updatedUser = { ...currentUser, balance: currentUser.balance + 200 };
+      setCurrentUser(updatedUser);
+      
+      const bonusTransaction: Transaction = {
+        id: Date.now() + 1,
+        userId: currentUser.id,
+        type: 'Bonus',
+        amount: 200,
+        date: new Date().toISOString(),
+        description: 'Anniversary bonus',
+        balanceAfter: updatedUser.balance
+      };
+      
+      setTransactions(prev => [...prev, bonusTransaction]);
+    }
+  }, [currentUser]);
+
+  // Update user profile
+  const updateProfile = useCallback((updatedUser: User) => {
+    setCurrentUser(updatedUser);
+    
+    // Update user in localStorage
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const updatedUsers = existingUsers.map((u: User) => 
+      u.id === updatedUser.id ? updatedUser : u
+    );
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }, []);
+
+  return (
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        {showAssistant && (
+          <SmartAssistant 
+            currentUser={currentUser}
+            matches={matches}
+            onPlaceBet={placeBet}
+            onClose={() => setShowAssistant(false)}
+          />
+        )}
+        
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage onLogin={login} />} />
+          <Route path="/register" element={<RegisterPage onRegister={register} />} />
+          <Route path="/dashboard-test" element={<DashboardTestPage />} /> {/* Add the test page route */}
+          
+          {/* Protected routes */}
+          <Route path="/dashboard" element={
+            currentUser ? 
+            <DashboardPage 
+              user={currentUser} 
+              onLogout={logout} 
+              onDeposit={deposit} 
+              onWithdraw={withdraw}
+              getUserDashboard={getUserDashboard}
+              notifications={notifications}
+              onMarkNotificationRead={(id) => {
+                setNotifications(prev => 
+                  prev.map(notif => 
+                    notif.id === id ? { ...notif, read: true } : notif
+                  )
+                );
+              }}
+              onShowAssistant={() => setShowAssistant(true)}
+              onUpdateProfile={updateProfile}
+            /> : 
+            <Navigate to="/login" />
+          } />
+          
+          <Route path="/matches" element={
+            currentUser ? 
+            <MatchesPage 
+              user={currentUser} 
+              matches={matches} 
+              onPlaceBet={placeBet}
+              onLogout={logout}
+              onShowAssistant={() => setShowAssistant(true)}
+            /> : 
+            <Navigate to="/login" />
+          } />
+          
+          <Route path="/profile" element={
+            currentUser ? 
+            <UserProfilePage 
+              user={currentUser} 
+              onUpdateProfile={updateProfile}
+              onLogout={logout}
+              onDeposit={deposit}
+              onWithdraw={withdraw}
+              onShowAssistant={() => setShowAssistant(true)}
+              getUserDashboard={getUserDashboard}
+            /> : 
+            <Navigate to="/login" />
+          } />
+          
+          <Route path="/admin" element={
+            currentUser?.role === 'admin' || currentUser?.role === 'staff' ? 
+            <AdminPage 
+              matches={matches} 
+              onUpdateMatchResult={updateMatchResult}
+              getAdminData={getAdminData}
+              onLogout={logout}
+              analytics={analytics}
+            /> : 
+            <Navigate to="/login" />
+          } />
+        </Routes>
+        
+        <LiveChat />
+      </div>
+    </Router>
+  );
+};
+
+export default App;

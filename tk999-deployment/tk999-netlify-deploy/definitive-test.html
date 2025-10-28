@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DEFINITIVE TEST - TK999</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+        .test-box { background: white; border: 1px solid #ccc; border-radius: 10px; padding: 20px; margin: 20px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 5px; background: #007cba; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #005a87; }
+    </style>
+</head>
+<body>
+    <h1>DEFINITIVE TK999 APPLICATION TEST</h1>
+    
+    <div class="test-box">
+        <h2>Step 1: Basic Connectivity</h2>
+        <div id="connectivity-test"></div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Step 2: Asset Verification</h2>
+        <div id="asset-test"></div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Step 3: JavaScript Execution Test</h2>
+        <div id="js-execution-test"></div>
+        <button onclick="runJsTest()">Run JavaScript Test</button>
+    </div>
+    
+    <div class="test-box">
+        <h2>Step 4: React Application Test</h2>
+        <div id="react-test"></div>
+        <button onclick="loadReactApp()">Load React Application</button>
+    </div>
+    
+    <div id="root"></div>
+
+    <script>
+        // Step 1: Test basic connectivity
+        document.getElementById('connectivity-test').innerHTML = '<p>Testing connectivity to main page...</p>';
+        fetch('/')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('connectivity-test').innerHTML += 
+                        '<p class="success">✅ Main page accessible</p>';
+                } else {
+                    document.getElementById('connectivity-test').innerHTML += 
+                        '<p class="error">❌ Main page not accessible: ' + response.status + '</p>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('connectivity-test').innerHTML += 
+                    '<p class="error">❌ Connection error: ' + error.message + '</p>';
+            });
+            
+        // Step 2: Test asset loading
+        document.getElementById('asset-test').innerHTML = '<p>Testing asset loading...</p>';
+        Promise.all([
+            fetch('/assets/index-CCamSkAb.js'),
+            fetch('/assets/index-CmJebkS1.css'),
+            fetch('/assets/vendor-nf7bT_Uh.js')
+        ])
+        .then(responses => {
+            const allOk = responses.every(response => response.ok);
+            if (allOk) {
+                document.getElementById('asset-test').innerHTML += 
+                    '<p class="success">✅ All assets accessible</p>';
+                return Promise.all(responses.map(r => r.text()));
+            } else {
+                throw new Error('Some assets failed to load');
+            }
+        })
+        .then(contents => {
+            document.getElementById('asset-test').innerHTML += 
+                '<p class="info">JS size: ' + contents[0].length + ' chars</p>' +
+                '<p class="info">CSS size: ' + contents[1].length + ' chars</p>' +
+                '<p class="info">Vendor JS size: ' + contents[2].length + ' chars</p>';
+        })
+        .catch(error => {
+            document.getElementById('asset-test').innerHTML += 
+                '<p class="error">❌ Asset loading failed: ' + error.message + '</p>';
+        });
+        
+        // Step 3: JavaScript execution test
+        function runJsTest() {
+            document.getElementById('js-execution-test').innerHTML = '<p>Running JavaScript execution test...</p>';
+            
+            // Create a simple test script
+            const testScript = document.createElement('script');
+            testScript.textContent = `
+                window.jsTestPassed = true;
+                console.log('JavaScript execution test passed');
+                document.getElementById('js-execution-test').innerHTML += 
+                    '<p class="success">✅ JavaScript executed successfully</p>';
+            `;
+            testScript.onerror = function(e) {
+                document.getElementById('js-execution-test').innerHTML += 
+                    '<p class="error">❌ JavaScript execution failed: ' + e.message + '</p>';
+            };
+            
+            document.head.appendChild(testScript);
+        }
+        
+        // Step 4: Load React application
+        function loadReactApp() {
+            document.getElementById('react-test').innerHTML = '<p>Loading React application...</p>';
+            
+            // Load the main React script
+            const reactScript = document.createElement('script');
+            reactScript.src = '/assets/index-CCamSkAb.js';
+            reactScript.onload = function() {
+                document.getElementById('react-test').innerHTML += 
+                    '<p class="success">✅ React application script loaded</p>';
+                document.getElementById('react-test').innerHTML += 
+                    '<p>Check the "root" div above to see if React rendered content.</p>';
+            };
+            reactScript.onerror = function(e) {
+                document.getElementById('react-test').innerHTML += 
+                    '<p class="error">❌ React application failed to load: ' + e.message + '</p>';
+            };
+            
+            document.head.appendChild(reactScript);
+        }
+    </script>
+</body>
+</html>

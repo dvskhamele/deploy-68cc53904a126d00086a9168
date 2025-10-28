@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Test</title>
+</head>
+<body>
+    <div id="root">
+        <div style="padding: 20px; text-align: center;">
+            <h1>TK999 Betting App</h1>
+            <p>If you see this message, the React app is not initializing properly.</p>
+            <p>Please check the browser console for JavaScript errors.</p>
+        </div>
+    </div>
+    
+    <!-- Manually load the React app -->
+    <script type="module">
+        // Try to load the main bundle
+        import('/assets/index-CCamSkAb.js').catch(err => {
+            console.error('Failed to load React app:', err);
+            document.body.innerHTML += `<div style="color: red; padding: 20px;"><h2>JavaScript Error:</h2><pre>${err.message}</pre></div>`;
+        });
+    </script>
+</body>
+</html>

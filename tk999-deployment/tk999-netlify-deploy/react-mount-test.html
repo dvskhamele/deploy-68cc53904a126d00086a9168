@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 React Mount Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        #test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        #root {
+            background: #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 200px;
+            position: relative;
+        }
+        #mount-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="test-info">
+        <h1>TK999 React Mount Test</h1>
+        <p>This page tests if the React application mounts correctly in the #root element.</p>
+        <div id="status">Status: Waiting for React to mount...</div>
+    </div>
+    
+    <div id="root">
+        <div id="mount-indicator">REACT MOUNTED</div>
+        <p>If you can see this text, the React app has not mounted yet.</p>
+        <p>The React app should replace this content when it initializes.</p>
+    </div>
+
+    <script>
+        // Monitor for React mounting
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('status').textContent = 'Status: DOM loaded, waiting for React...';
+            
+            // Check periodically if React has mounted
+            const interval = setInterval(() => {
+                const root = document.getElementById('root');
+                const indicator = document.getElementById('mount-indicator');
+                
+                // Check if the original content has been replaced
+                if (root && root.children.length > 1) {
+                    // Look for signs that React has mounted
+                    const hasReactContent = Array.from(root.children).some(child => 
+                        child.textContent.includes('TK999') || 
+                        child.textContent.includes('Betting') ||
+                        child.querySelector('[class*="card"]') ||
+                        child.querySelector('[class*="btn"]')
+                    );
+                    
+                    if (hasReactContent) {
+                        document.getElementById('status').textContent = 'Status: SUCCESS - React app has mounted!';
+                        indicator.style.display = 'block';
+                        clearInterval(interval);
+                    }
+                }
+            }, 1000);
+            
+            // Timeout after 10 seconds
+            setTimeout(() => {
+                clearInterval(interval);
+                const status = document.getElementById('status');
+                if (status.textContent === 'Status: Waiting for React to mount...') {
+                    status.textContent = 'Status: TIMEOUT - React app did not mount within 10 seconds';
+                }
+            }, 10000);
+        });
+    </script>
+    
+    <!-- Load the React app -->
+    <script type="module" crossorigin src="./assets/index-CCamSkAb.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CmJebkS1.css">
+</body>
+</html>

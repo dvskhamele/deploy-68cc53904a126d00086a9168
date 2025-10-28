@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test</title>
+</head>
+<body>
+    <h1>Simple Test Page</h1>
+    <div id="test-results"></div>
+    <div id="root"></div>
+
+    <script>
+        // Test if the DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('test-results').innerHTML = '<p>DOM is ready</p>';
+            
+            // Test if we can access the main JS file
+            fetch('/assets/index-CCamSkAb.js')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('test-results').innerHTML += '<p>Main JS file loaded: ' + data.length + ' characters</p>';
+                    
+                    // Try to evaluate a small portion of the script to see if it parses correctly
+                    try {
+                        // Just check if the first part parses
+                        const start = data.substring(0, 1000);
+                        document.getElementById('test-results').innerHTML += '<p>First 1000 chars parsed successfully</p>';
+                    } catch (e) {
+                        document.getElementById('test-results').innerHTML += '<p>Error parsing JS: ' + e.message + '</p>';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('test-results').innerHTML += '<p>Error loading JS: ' + error.message + '</p>';
+                });
+        });
+    </script>
+</body>
+</html>

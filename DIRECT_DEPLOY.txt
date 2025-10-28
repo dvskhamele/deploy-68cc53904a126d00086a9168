@@ -1,0 +1,53 @@
+#!/bin/bash
+# Direct Deployment Script for TK999 Betting Platform to Netlify
+
+echo "🚀 TK999 Betting Platform - Direct Deployment"
+
+# Check if we have the deployment zip
+if [ ! -f "tk999-betting-platform.zip" ]; then
+    echo "📦 Creating deployment package..."
+    zip -r tk999-betting-platform.zip . -x "node_modules/*" ".git/*" ".qodo/*" "*.log" "*/Thumbs.db" "*/.DS_Store" "deploy*" "NETLIFY_*"
+    echo "✅ Deployment package created"
+fi
+
+echo ""
+echo "🎯 Direct Deployment Options:"
+echo ""
+echo "Option 1: GitHub + Netlify Auto-Deploy (Recommended)"
+echo "----------"
+echo "1. Go to https://github.com/new and create a new repository"
+echo "2. Name it 'tk999-platform' (or your preferred name)"
+echo "3. Don't initialize with README, .gitignore, or license"
+echo "4. After creation, run these commands:"
+echo ""
+echo "   git remote add origin https://github.com/YOUR_USERNAME/tk999-platform.git"
+echo "   git branch -M main"
+echo "   git push -u origin main"
+echo ""
+echo "5. Go to https://app.netlify.com and connect GitHub"
+echo "6. Select your repository - deployment starts automatically!"
+
+echo ""
+echo "Option 2: Manual Upload to Netlify"
+echo "----------"
+echo "1. Go to https://app.netlify.com/drop"
+echo "2. Drag and drop tk999-betting-platform.zip"
+echo "3. Your site will be live in seconds!"
+
+echo ""
+echo "Option 3: Deploy using Netlify CLI (if installed)"
+echo "----------"
+echo "1. Install: npm install -g netlify-cli"
+echo "2. Login: netlify login"
+echo "3. Deploy: netlify deploy --prod"
+echo ""
+echo "Current directory: $(pwd)"
+echo "Deployment package: tk999-betting-platform.zip"
+echo ""
+echo "🏆 Your TK999 Betting Platform is ready to go live!"
+echo "   The platform includes full betting functionality with:"
+echo "   • Live match data with real odds"
+echo "   • Complete betting system"
+echo "   • Beautiful UI/UX"
+echo "   • Mobile responsiveness"
+echo "   • 1000 BDT starter balance"

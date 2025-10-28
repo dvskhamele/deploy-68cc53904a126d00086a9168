@@ -1,0 +1,765 @@
+/* ==================== BEAUTIFUL SOLID CARDS CSS ==================== */
+/* This file contains styles with solid colors only, no transparency or blur effects */
+
+/* Base Styles */
+html, body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f7fa;
+  color: #1e293b;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+:root {
+  /* Solid Color Palette */
+  --solid-primary-50: #eff6ff;
+  --solid-primary-100: #dbeafe;
+  --solid-primary-200: #bfdbfe;
+  --solid-primary-300: #93c5fd;
+  --solid-primary-400: #60a5fa;
+  --solid-primary-500: #3b82f6;
+  --solid-primary-600: #2563eb;
+  --solid-primary-700: #1d4ed8;
+  --solid-primary-800: #1e40af;
+  --solid-primary-900: #1e3a8a;
+  
+  --solid-secondary-50: #f0f9ff;
+  --solid-secondary-100: #e0f2fe;
+  --solid-secondary-200: #bae6fd;
+  --solid-secondary-300: #7dd3fc;
+  --solid-secondary-400: #38bdf8;
+  --solid-secondary-500: #0ea5e9;
+  --solid-secondary-600: #0284c7;
+  --solid-secondary-700: #0369a1;
+  --solid-secondary-800: #075985;
+  --solid-secondary-900: #0c4a6e;
+  
+  --solid-success-50: #f0fdf4;
+  --solid-success-100: #dcfce7;
+  --solid-success-200: #bbf7d0;
+  --solid-success-300: #86efac;
+  --solid-success-400: #4ade80;
+  --solid-success-500: #22c55e;
+  --solid-success-600: #16a34a;
+  --solid-success-700: #15803d;
+  --solid-success-800: #166534;
+  --solid-success-900: #14532d;
+  
+  --solid-warning-50: #fffbeb;
+  --solid-warning-100: #fef3c7;
+  --solid-warning-200: #fde68a;
+  --solid-warning-300: #fcd34d;
+  --solid-warning-400: #fbbf24;
+  --solid-warning-500: #f59e0b;
+  --solid-warning-600: #d97706;
+  --solid-warning-700: #b45309;
+  --solid-warning-800: #92400e;
+  --solid-warning-900: #78350f;
+  
+  --solid-danger-50: #fef2f2;
+  --solid-danger-100: #fee2e2;
+  --solid-danger-200: #fecaca;
+  --solid-danger-300: #fca5a5;
+  --solid-danger-400: #f87171;
+  --solid-danger-500: #ef4444;
+  --solid-danger-600: #dc2626;
+  --solid-danger-700: #b91c1c;
+  --solid-danger-800: #991b1b;
+  --solid-danger-900: #7f1d1d;
+  
+  --solid-neutral-50: #fafafa;
+  --solid-neutral-100: #f5f5f5;
+  --solid-neutral-200: #e5e5e5;
+  --solid-neutral-300: #d4d4d4;
+  --solid-neutral-400: #a3a3a3;
+  --solid-neutral-500: #737373;
+  --solid-neutral-600: #525252;
+  --solid-neutral-700: #404040;
+  --solid-neutral-800: #262626;
+  --solid-neutral-900: #171717;
+  
+  --solid-purple-500: #a855f7;
+  --solid-purple-600: #9333ea;
+  --solid-blue-500: #3b82f6;
+  --solid-blue-600: #2563eb;
+  --solid-green-500: #22c55e;
+  --solid-green-600: #16a34a;
+  --solid-emerald-100: #d1fae5;
+  --solid-emerald-200: #a7f3d0;
+  --solid-orange-100: #fed7aa;
+  --solid-orange-200: #fdba74;
+  --solid-amber-100: #fef3c7;
+  --solid-amber-200: #fde68a;
+  --solid-indigo-50: #eef2ff;
+  --solid-indigo-100: #e0e7ff;
+  --solid-pink-100: #fce7f3;
+  --solid-yellow-100: #fef9c3;
+  --solid-red-100: #fee2e2;
+  
+  /* Spacing and Radius */
+  --solid-radius-sm: 0.25rem;
+  --solid-radius: 0.5rem;
+  --solid-radius-md: 0.75rem;
+  --solid-radius-lg: 1rem;
+  --solid-radius-xl: 1.25rem;
+  --solid-radius-2xl: 1.5rem;
+  --solid-radius-3xl: 1.75rem;
+  --solid-radius-full: 9999px;
+}
+
+/* Solid Card Components */
+.beautiful-solid-card {
+  background: var(--solid-neutral-50);
+  border-radius: var(--solid-radius-2xl);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--solid-neutral-200);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.beautiful-solid-card-header {
+  padding: 1.5rem;
+  background: var(--solid-primary-700);
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.beautiful-solid-card-body {
+  padding: 1.5rem;
+}
+
+/* Stats Cards */
+.beautiful-solid-stats-card {
+  background: white;
+  border-radius: var(--solid-radius-xl);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--solid-neutral-200);
+  transition: all 0.3s ease;
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-stats-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.beautiful-solid-stats-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--solid-primary-600);
+}
+
+.beautiful-solid-stats-label {
+  color: var(--solid-neutral-600);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Profile Card */
+.beautiful-solid-profile-card {
+  background: white;
+  border-radius: var(--solid-radius-2xl);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--solid-neutral-200);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.beautiful-solid-profile-header {
+  background: var(--solid-primary-600);
+  padding: 1.5rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.beautiful-solid-profile-body {
+  padding: 1.5rem;
+}
+
+/* Wallet Card */
+.beautiful-solid-wallet-card {
+  background: white;
+  border-radius: var(--solid-radius-2xl);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--solid-neutral-200);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-wallet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.beautiful-solid-wallet-header {
+  background: var(--solid-green-600);
+  padding: 1.5rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.beautiful-solid-wallet-body {
+  padding: 1.5rem;
+}
+
+/* Notification Card */
+.beautiful-solid-notification-card {
+  background: white;
+  border-radius: var(--solid-radius-xl);
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--solid-neutral-200);
+  transition: all 0.3s ease;
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.beautiful-solid-notification-card.unread {
+  border-left: 4px solid var(--solid-primary-500);
+  background: var(--solid-blue-50);
+}
+
+/* Table Styles */
+.beautiful-solid-table-container {
+  border-radius: var(--solid-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--solid-neutral-200);
+  background: white;
+}
+
+.beautiful-solid-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-table th {
+  background: var(--solid-neutral-100);
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--solid-neutral-700);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.beautiful-solid-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--solid-neutral-200);
+}
+
+.beautiful-solid-table tr:last-child td {
+  border-bottom: none;
+}
+
+.beautiful-solid-table tr:nth-child(even) {
+  background-color: var(--solid-neutral-50);
+}
+
+.beautiful-solid-table tr:hover {
+  background-color: var(--solid-blue-50);
+}
+
+/* Button Styles */
+.beautiful-solid-btn {
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--solid-radius-lg);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  min-width: 120px;
+  min-height: 44px;
+  color: white; /* Default text color for buttons */
+  background: var(--solid-primary-600); /* Default background */
+}
+
+.beautiful-solid-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.beautiful-solid-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.beautiful-solid-btn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffffff66, #ffffff1a);
+  transform: translate(-100%);
+  transition: transform 0.8s ease;
+  z-index: 1;
+}
+
+.beautiful-solid-btn:hover:after {
+  transform: translate(100%);
+}
+
+.beautiful-solid-btn > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Inputs */
+.beautiful-solid-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid var(--solid-neutral-200);
+  border-radius: var(--solid-radius-lg);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-input:focus {
+  outline: none;
+  border-color: var(--solid-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  background-color: white;
+}
+
+.beautiful-solid-input:hover:not(:focus):not(:disabled) {
+  border-color: var(--solid-neutral-300);
+}
+
+/* Header */
+.beautiful-solid-header {
+  background: var(--solid-primary-700);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid var(--solid-primary-600);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Wallet Display */
+.beautiful-solid-wallet-display {
+  background: var(--solid-green-600);
+  color: white;
+  border-radius: var(--solid-radius-lg);
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid var(--solid-green-500);
+}
+
+.beautiful-solid-wallet-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* Tabs */
+.beautiful-solid-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: white;
+  border-radius: var(--solid-radius-xl);
+  padding: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--solid-neutral-200);
+}
+
+.beautiful-solid-tab {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--solid-radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--solid-neutral-600);
+}
+
+.beautiful-solid-tab:hover {
+  background: var(--solid-neutral-100);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-tab.active {
+  background: var(--solid-blue-100);
+  color: var(--solid-primary-700);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+
+/* Badges */
+.beautiful-solid-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.beautiful-solid-badge-primary {
+  background: var(--solid-blue-100);
+  color: var(--solid-primary-700);
+}
+
+.beautiful-solid-badge-success {
+  background: var(--solid-green-100);
+  color: var(--solid-success-700);
+}
+
+.beautiful-solid-badge-warning {
+  background: var(--solid-warning-100);
+  color: var(--solid-warning-700);
+}
+
+.beautiful-solid-badge-danger {
+  background: var(--solid-danger-100);
+  color: var(--solid-danger-700);
+}
+
+.beautiful-solid-badge-secondary {
+  background: var(--solid-neutral-100);
+  color: var(--solid-neutral-700);
+}
+
+/* Match Card */
+.beautiful-solid-match-card {
+  background: white;
+  border-radius: var(--solid-radius-2xl);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--solid-neutral-200);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-match-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.beautiful-solid-match-header {
+  padding: 1.25rem;
+  background: var(--solid-primary-700);
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.beautiful-solid-match-body {
+  padding: 1.5rem;
+}
+
+.beautiful-solid-match-team {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--solid-neutral-800);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.beautiful-solid-match-vs {
+  text-align: center;
+  color: var(--solid-neutral-500);
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.beautiful-solid-odds-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.beautiful-solid-odd-card {
+  background: var(--solid-neutral-50);
+  border-radius: var(--solid-radius-lg);
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--solid-neutral-200);
+  transition: all 0.2s ease;
+}
+
+.beautiful-solid-odd-card:hover {
+  background: var(--solid-blue-50);
+  border-color: var(--solid-blue-200);
+  transform: translateY(-2px);
+}
+
+.beautiful-solid-odd-team {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--solid-neutral-700);
+  margin-bottom: 0.5rem;
+}
+
+.beautiful-solid-odd-value {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--solid-primary-600);
+}
+
+.beautiful-solid-quick-bet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.beautiful-solid-quick-bet-btn {
+  background: var(--solid-neutral-100);
+  border: 1px solid var(--solid-neutral-200);
+  border-radius: var(--solid-radius-md);
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--solid-neutral-700);
+  transition: all 0.2s ease;
+}
+
+.beautiful-solid-quick-bet-btn:hover {
+  background: var(--solid-neutral-200);
+  transform: translateY(-2px);
+}
+
+/* Bet Form */
+.beautiful-solid-bet-form {
+  background: white;
+  border-radius: var(--solid-radius-2xl);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid var(--solid-neutral-200);
+  color: var(--solid-neutral-800);
+  padding: 1.5rem;
+}
+
+.beautiful-solid-bet-form-header {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--solid-neutral-800);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.beautiful-solid-bet-summary {
+  background: var(--solid-neutral-50);
+  border-radius: var(--solid-radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--solid-neutral-200);
+}
+
+.beautiful-solid-bet-summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.beautiful-solid-bet-summary-label {
+  color: var(--solid-neutral-600);
+  font-weight: 500;
+}
+
+.beautiful-solid-bet-summary-value {
+  font-weight: 700;
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-bet-summary-value.highlight {
+  color: var(--solid-primary-600);
+}
+
+/* Empty State */
+.beautiful-solid-empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--solid-neutral-50);
+  border-radius: var(--solid-radius-xl);
+  border: 1px dashed var(--solid-neutral-300);
+  color: var(--solid-neutral-800);
+}
+
+.beautiful-solid-empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--solid-neutral-400);
+}
+
+.beautiful-solid-empty-state-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--solid-neutral-700);
+  margin-bottom: 0.5rem;
+}
+
+.beautiful-solid-empty-state-message {
+  color: var(--solid-neutral-600);
+  margin-bottom: 1.5rem;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .beautiful-solid-card-header,
+  .beautiful-solid-profile-header,
+  .beautiful-solid-wallet-header {
+    padding: 1.25rem;
+    font-size: 1.1rem;
+  }
+  
+  .beautiful-solid-card-body,
+  .beautiful-solid-profile-body,
+  .beautiful-solid-wallet-body {
+    padding: 1.25rem;
+  }
+  
+  .beautiful-solid-stats-value {
+    font-size: 1.75rem;
+  }
+  
+  .beautiful-solid-tabs {
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  
+  .beautiful-solid-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .beautiful-solid-table th,
+  .beautiful-solid-table td {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .beautiful-solid-odds-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .beautiful-solid-quick-bet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}/* Button Variants */
+.beautiful-solid-btn-primary {
+  background: var(--solid-primary-600);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.beautiful-solid-btn-primary:hover {
+  background: var(--solid-primary-700);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.6);
+}
+
+.beautiful-solid-btn-success {
+  background: var(--solid-success-600);
+  color: white;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+}
+
+.beautiful-solid-btn-success:hover {
+  background: var(--solid-success-700);
+  box-shadow: 0 6px 15px rgba(22, 163, 74, 0.6);
+}
+
+.beautiful-solid-btn-warning {
+  background: var(--solid-warning-600);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
+}
+
+.beautiful-solid-btn-warning:hover {
+  background: var(--solid-warning-700);
+  box-shadow: 0 6px 15px rgba(217, 119, 6, 0.6);
+}
+
+.beautiful-solid-btn-danger {
+  background: var(--solid-danger-600);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+}
+
+.beautiful-solid-btn-danger:hover {
+  background: var(--solid-danger-700);
+  box-shadow: 0 6px 15px rgba(220, 38, 38, 0.6);
+}
+
+.beautiful-solid-btn-secondary {
+  background: var(--solid-secondary-600);
+  color: white;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.5);
+}
+
+.beautiful-solid-btn-secondary:hover {
+  background: var(--solid-secondary-700);
+  box-shadow: 0 6px 15px rgba(2, 132, 199, 0.6);
+}

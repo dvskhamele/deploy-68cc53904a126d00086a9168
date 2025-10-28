@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Module Test</title>
+</head>
+<body>
+    <h1>JavaScript Module Test</h1>
+    <div id="result"></div>
+
+    <script type="module">
+        document.getElementById('result').innerHTML = '<p style="color: green;">✅ ES Modules are supported</p>';
+        
+        // Try to import a simple module
+        try {
+            // This is a simple test - we won't actually import anything complex
+            const test = 'module test';
+            document.getElementById('result').innerHTML += '<p style="color: green;">✅ Module execution works</p>';
+        } catch (error) {
+            document.getElementById('result').innerHTML += '<p style="color: red;">❌ Module execution failed: ' + error.message + '</p>';
+        }
+    </script>
+
+    <script>
+        // Fallback for browsers that don't support modules
+        if (!document.querySelector('script[type="module"]')) {
+            document.getElementById('result').innerHTML = '<p style="color: orange;">⚠️ ES Modules not supported in this environment</p>';
+        }
+    </script>
+</body>
+</html>

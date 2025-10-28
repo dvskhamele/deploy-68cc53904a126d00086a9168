@@ -1,0 +1,16 @@
+{
+  "name": "tk999-debug",
+  "version": "1.0.0",
+  "description": "Debug script for TK999 deployment",
+  "main": "debug.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node debug.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}

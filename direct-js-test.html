@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct JS Test</title>
+</head>
+<body>
+    <h1>Direct JavaScript Test</h1>
+    <p>This page directly loads the JavaScript to test if it works.</p>
+    <div id="root"></div>
+    
+    <script type="module">
+        // Try to import the main JavaScript file directly
+        import('./assets/index-CCamSkAb.js')
+            .then(() => {
+                console.log("JavaScript loaded successfully");
+                document.body.innerHTML += "<p style='color: green;'>JavaScript loaded successfully</p>";
+            })
+            .catch(err => {
+                console.error("Error loading JavaScript:", err);
+                document.body.innerHTML += "<p style='color: red;'>Error loading JavaScript: " + err.message + "</p>";
+            });
+    </script>
+</body>
+</html>

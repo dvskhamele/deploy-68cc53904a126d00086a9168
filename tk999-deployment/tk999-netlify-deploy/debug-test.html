@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test Page</h1>
+    <p>If you can see this, the server is working but the React app is not loading.</p>
+    <div id="root"></div>
+    <script>
+        // Simple test to see if JavaScript is working
+        console.log("Debug script loaded");
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM loaded");
+            const rootElement = document.getElementById("root");
+            if (rootElement) {
+                console.log("Root element found");
+                // Try to render something simple
+                rootElement.innerHTML = "<h2>JavaScript is working but React is not loading properly</h2>";
+            }
+        });
+    </script>
+</body>
+</html>

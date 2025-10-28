@@ -1,0 +1,838 @@
+/* Beautiful Dashboard Styles for TK999 Application */
+
+/* Enhanced Header Styles */
+.dashboard-header-enhanced {
+  background: linear-gradient(90deg, #4f46e5, #7c3aed, #ec4899);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.dashboard-header-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.dashboard-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.dashboard-logo:hover {
+  color: #fde047;
+  transition: color 0.3s ease;
+}
+
+.dashboard-logo-icon {
+  font-size: 1.875rem;
+  margin-right: 0.75rem;
+}
+
+/* Wallet Display Styles */
+.dashboard-wallet-enhanced {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-wallet-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.dashboard-wallet-amount {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+/* User Profile Styles */
+.dashboard-user-profile {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-right: 0.75rem;
+}
+
+.dashboard-user-name {
+  font-weight: 600;
+  color: white;
+}
+
+.dashboard-user-role {
+  font-size: 0.75rem;
+  color: #fde047;
+}
+
+/* Navigation Buttons */
+.dashboard-nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dashboard-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem;
+}
+
+.dashboard-nav-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-nav-btn-label {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .dashboard-nav-btn-label {
+    display: block;
+  }
+}
+
+/* Page Title Styles */
+.dashboard-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  font-size: 1.125rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-welcome-user {
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+/* Enhanced Tabs */
+.dashboard-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background-color: #f3f4f6;
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+}
+
+.dashboard-tab {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.dashboard-tab:hover {
+  color: #4f46e5;
+  background-color: white;
+}
+
+.dashboard-tab.active {
+  color: white;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-tab-badge {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 9999px;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dashboard Card Styles */
+.dashboard-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card-header {
+  color: white;
+  padding: 1.25rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-card-body {
+  padding: 1.5rem;
+}
+
+/* Profile Card Styles */
+.dashboard-profile-card {
+  background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #dbeafe;
+}
+
+.dashboard-profile-header {
+  color: white;
+  padding: 1.25rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-profile-body {
+  padding: 1.5rem;
+}
+
+.dashboard-profile-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-profile-avatar {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-profile-avatar-edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 9999px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.dashboard-profile-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-top: 1rem;
+}
+
+.dashboard-profile-joined {
+  color: #6b7280;
+}
+
+.dashboard-profile-info {
+  space-y: 1rem;
+}
+
+.dashboard-profile-info-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dashboard-profile-info-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.dashboard-profile-info-text {
+  flex: 1;
+}
+
+.dashboard-profile-info-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.dashboard-profile-info-value {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Wallet Card Styles */
+.dashboard-wallet-card-enhanced {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #bbf7d0;
+}
+
+.dashboard-wallet-header {
+  color: white;
+  padding: 1.25rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #10b981, #047857);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-wallet-body {
+  padding: 1.5rem;
+}
+
+.dashboard-balance-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-balance-label {
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-balance-amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.dashboard-balance-currency {
+  font-size: 1.25rem;
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+.dashboard-wallet-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-wallet-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dashboard-wallet-btn.deposit {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.dashboard-wallet-btn.deposit:hover {
+  background: linear-gradient(90deg, #059669, #047857);
+}
+
+.dashboard-wallet-btn.withdraw {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.dashboard-wallet-btn.withdraw:hover {
+  background: linear-gradient(90deg, #d97706, #b45309);
+}
+
+.dashboard-quick-deposit {
+  text-align: center;
+}
+
+.dashboard-quick-deposit-label {
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.dashboard-quick-deposit-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.dashboard-quick-deposit-btn {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(90deg, #dbeafe, #c7d2fe);
+  color: #1d4ed8;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.dashboard-quick-deposit-btn:hover {
+  background: linear-gradient(90deg, #bfdbfe, #a5b4fc);
+}
+
+/* Stats Grid */
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.dashboard-stat-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dashboard-stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4f46e5;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Table Styles */
+.dashboard-table-container {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th {
+  padding: 1rem;
+  background-color: #f9fafb;
+  text-align: left;
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dashboard-table td {
+  padding: 1rem;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.dashboard-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* Status Badges */
+.dashboard-table-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dashboard-table-badge.deposit {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.dashboard-table-badge.withdrawal {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.dashboard-table-badge.bet {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+.dashboard-table-badge.win {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.dashboard-table-badge.bonus {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+
+.dashboard-table-badge.fee {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.dashboard-table-badge.pending {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+.dashboard-table-badge.won {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.dashboard-table-badge.lost {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Empty State */
+.dashboard-empty-state {
+  text-align: center;
+  padding: 2.5rem;
+}
+
+.dashboard-empty-state-icon {
+  font-size: 3rem;
+  margin: 0 auto 1rem;
+}
+
+.dashboard-empty-state-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-empty-state-message {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.dashboard-empty-state-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.dashboard-empty-state-btn:hover {
+  background: linear-gradient(90deg, #4338ca, #6d28d9);
+}
+
+/* Notifications */
+.dashboard-notifications-container {
+  space-y: 1rem;
+}
+
+.dashboard-notification-card {
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3b82f6;
+}
+
+.dashboard-notification-card.unread {
+  border-left: 4px solid #7c3aed;
+  background-color: #f5f3ff;
+}
+
+.dashboard-notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-notification-title {
+  font-weight: bold;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.dashboard-notification-mark-read {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.dashboard-notification-mark-read:hover {
+  color: #374151;
+}
+
+.dashboard-notification-message {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-notification-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Settings Styles */
+.dashboard-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-settings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.dashboard-settings-section {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-settings-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-settings-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-settings-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-settings-input,
+.dashboard-settings-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-settings-input:focus,
+.dashboard-settings-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+}
+
+.dashboard-settings-checkbox-group {
+  space-y: 0.5rem;
+}
+
+.dashboard-settings-checkbox-label {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.dashboard-settings-checkbox {
+  margin-right: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4f46e5;
+  border-radius: 0.25rem;
+}
+
+.dashboard-settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dashboard-settings-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.dashboard-settings-btn.save {
+  background: linear-gradient(90deg, #10b981, #059669);
+  color: white;
+}
+
+.dashboard-settings-btn.save:hover {
+  background: linear-gradient(90deg, #059669, #047857);
+}
+
+.dashboard-settings-btn.cancel {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.dashboard-settings-btn.cancel:hover {
+  background-color: #d1d5db;
+}
+
+.dashboard-settings-btn.logout {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+  color: white;
+}
+
+.dashboard-settings-btn.logout:hover {
+  background: linear-gradient(90deg, #dc2626, #ea580c);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  border-radius: 9999px;
+  height: 2rem;
+  width: 2rem;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  margin: 0 auto;
+}
+
+/* Floating animation for background elements */
+.floating-element {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Apply styles to general elements */
+body {
+  background: linear-gradient(135deg, #f9fafb, #dbeafe);
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+  100% { box-shadow: 0 0 5px currentColor; }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test</title>
+</head>
+<body>
+    <h1>CORS and Module Test</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        // Test 1: Check if we can fetch the JS file
+        fetch('/assets/index-CCamSkAb.js')
+            .then(response => {
+                if (response.ok) {
+                    results.innerHTML += '<p style="color: green;">✅ Can fetch JS file</p>';
+                    return response.text();
+                } else {
+                    throw new Error('HTTP ' + response.status);
+                }
+            })
+            .then(jsContent => {
+                results.innerHTML += '<p>JS file size: ' + jsContent.length + ' characters</p>';
+                
+                // Test 2: Try to load as a module
+                results.innerHTML += '<p>Testing module loading...</p>';
+                
+                // Create a simple module test
+                const testScript = document.createElement('script');
+                testScript.type = 'module';
+                testScript.textContent = `
+                    // This is a simple test to see if modules work
+                    window.moduleSupportTest = true;
+                    console.log('Module executed successfully');
+                    document.getElementById('results').innerHTML += '<p style="color: green;">✅ Module executed</p>';
+                `;
+                
+                testScript.onerror = function(e) {
+                    results.innerHTML += '<p style="color: red;">❌ Module failed to execute: ' + e.message + '</p>';
+                };
+                
+                document.head.appendChild(testScript);
+                
+                // Test 3: Try to load the actual script
+                setTimeout(() => {
+                    results.innerHTML += '<p>Loading main application...</p>';
+                    const mainScript = document.createElement('script');
+                    mainScript.type = 'module';
+                    mainScript.src = '/assets/index-CCamSkAb.js';
+                    mainScript.onload = function() {
+                        results.innerHTML += '<p style="color: green;">✅ Main application script loaded</p>';
+                    };
+                    mainScript.onerror = function(e) {
+                        results.innerHTML += '<p style="color: red;">❌ Main application script failed: ' + e.message + '</p>';
+                    };
+                    document.head.appendChild(mainScript);
+                }, 1000);
+            })
+            .catch(error => {
+                results.innerHTML += '<p style="color: red;">❌ Failed to fetch JS: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>

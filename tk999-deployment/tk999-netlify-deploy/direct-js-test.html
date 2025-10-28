@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Direct JS Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        #test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        #root {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            min-height: 300px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        #root.mounted {
+            border: 2px solid #28a745;
+            background: #d4edda;
+        }
+        #status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .btn {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #005a9e;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="test-container">
+        <h1>TK999 Direct JavaScript Test</h1>
+        <p>This page directly loads and tests the TK999 React application bundle.</p>
+        
+        <div id="status" class="loading">
+            Status: Initializing test...
+        </div>
+        
+        <div>
+            <button class="btn" onclick="runTest()">Run Test</button>
+            <button class="btn" onclick="checkMount()">Check Mount Status</button>
+            <button class="btn" onclick="resetTest()">Reset Test</button>
+        </div>
+        
+        <h2>Test Area</h2>
+        <div id="root">
+            <p>React app should render here...</p>
+            <p>If you can still see this text after 5 seconds, the React app is not mounting correctly.</p>
+        </div>
+    </div>
+
+    <script>
+        let testStarted = false;
+        
+        function updateStatus(message, type = 'loading') {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = `Status: ${message}`;
+            statusElement.className = type;
+        }
+        
+        function runTest() {
+            if (testStarted) {
+                updateStatus('Test already running', 'loading');
+                return;
+            }
+            
+            testStarted = true;
+            updateStatus('Loading TK999 React application...', 'loading');
+            
+            // Create script element to load the React bundle
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.crossOrigin = 'crossorigin';
+            script.src = '/assets/index-CTgH1DqP.js';
+            
+            script.onload = function() {
+                updateStatus('React bundle loaded successfully. Waiting for mount...', 'loading');
+                // Give React time to mount
+                setTimeout(checkMount, 3000);
+            };
+            
+            script.onerror = function() {
+                updateStatus('Failed to load React bundle', 'error');
+                testStarted = false;
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function checkMount() {
+            const rootElement = document.getElementById('root');
+            
+            if (rootElement && rootElement.children.length > 1) {
+                // Check if React has replaced the original content
+                const hasOriginalContent = Array.from(rootElement.children).some(child => 
+                    child.textContent.includes('React app should render here') ||
+                    child.textContent.includes('If you can still see this text')
+                );
+                
+                if (!hasOriginalContent) {
+                    // React has mounted and replaced the content
+                    rootElement.classList.add('mounted');
+                    updateStatus('SUCCESS: React app has mounted!', 'success');
+                    testStarted = false;
+                    return;
+                }
+            }
+            
+            if (testStarted) {
+                updateStatus('React app not mounted yet. Still waiting...', 'loading');
+                setTimeout(checkMount, 2000);
+            }
+        }
+        
+        function resetTest() {
+            const rootElement = document.getElementById('root');
+            rootElement.classList.remove('mounted');
+            rootElement.innerHTML = `
+                <p>React app should render here...</p>
+                <p>If you can still see this text after 5 seconds, the React app is not mounting correctly.</p>
+            `;
+            updateStatus('Test reset. Ready to run again.', 'loading');
+            testStarted = false;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('Ready to test React app mounting', 'loading');
+        });
+    </script>
+</body>
+</html>

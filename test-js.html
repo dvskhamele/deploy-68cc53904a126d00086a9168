@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 - Test Page</title>
+</head>
+<body>
+    <h1>TK999 Application Test</h1>
+    <p>If you can see this, the static content is working.</p>
+    <p>If the React app loads below, the JavaScript is working:</p>
+    <div id="root"></div>
+    
+    <script type="module">
+        // Simple test to see if modules work
+        console.log("JavaScript module loaded");
+        
+        // Try to import React (this would be in the actual app)
+        import('/assets/index-CCamSkAb.js')
+            .then(() => console.log("Main app loaded successfully"))
+            .catch(err => console.error("Error loading main app:", err));
+    </script>
+</body>
+</html>

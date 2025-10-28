@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React App Test</title>
+</head>
+<body>
+    <h1>React App Test</h1>
+    <p>This page tests if the React app loads correctly.</p>
+    
+    <div id="test-results">
+        <p>Testing JavaScript loading...</p>
+    </div>
+    
+    <div id="root">
+        <p>If you see this text, the React app did not load correctly.</p>
+    </div>
+    
+    <script>
+        // Show test results
+        const testResults = document.getElementById('test-results');
+        
+        // Test if we can access the JavaScript files
+        fetch('/assets/index-CCamSkAb.js')
+            .then(response => {
+                if (response.ok) {
+                    testResults.innerHTML += '<p style="color: green;">✓ Main JavaScript file is accessible</p>';
+                    return true;
+                } else {
+                    testResults.innerHTML += '<p style="color: red;">✗ Main JavaScript file is not accessible</p>';
+                    return false;
+                }
+            })
+            .catch(error => {
+                testResults.innerHTML += '<p style="color: red;">✗ Error accessing main JavaScript file: ' + error.message + '</p>';
+                return false;
+            })
+            .then(() => {
+                // Try to load the main JavaScript as a module
+                return import('/assets/index-CCamSkAb.js')
+                    .then(() => {
+                        testResults.innerHTML += '<p style="color: green;">✓ Main JavaScript module loaded successfully</p>';
+                        testResults.innerHTML += '<p>Check if the React app has replaced the content in the root div.</p>';
+                    })
+                    .catch(error => {
+                        testResults.innerHTML += '<p style="color: red;">✗ Error loading main JavaScript module: ' + error.message + '</p>';
+                    });
+            });
+    </script>
+</body>
+</html>

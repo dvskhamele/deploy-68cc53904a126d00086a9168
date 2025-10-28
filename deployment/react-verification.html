@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React App Verification</title>
+</head>
+<body>
+    <h1>React App Verification</h1>
+    <p>This page verifies if the React app can be loaded correctly.</p>
+    
+    <div id="verification-results">
+        <h2>Verification Results:</h2>
+        <div id="js-status">Checking JavaScript accessibility...</div>
+        <div id="react-status">Checking React app loading...</div>
+    </div>
+    
+    <div id="root">
+        <p>If you see this text, the React app did not load correctly.</p>
+    </div>
+    
+    <script>
+        // Check if JavaScript files are accessible
+        const jsStatus = document.getElementById('js-status');
+        const reactStatus = document.getElementById('react-status');
+        
+        // Test main JavaScript file
+        fetch('/assets/index-CCamSkAb.js')
+            .then(response => {
+                if (response.ok) {
+                    jsStatus.innerHTML = '<p style="color: green;">✓ Main JavaScript file is accessible</p>';
+                    return true;
+                } else {
+                    jsStatus.innerHTML = '<p style="color: red;">✗ Main JavaScript file is not accessible (Status: ' + response.status + ')</p>';
+                    return false;
+                }
+            })
+            .catch(error => {
+                jsStatus.innerHTML = '<p style="color: red;">✗ Error accessing main JavaScript file: ' + error.message + '</p>';
+                return false;
+            })
+            .then(() => {
+                // Test CSS file
+                return fetch('/assets/index-CmJebkS1.css')
+                    .then(response => {
+                        if (response.ok) {
+                            jsStatus.innerHTML += '<p style="color: green;">✓ CSS file is accessible</p>';
+                        } else {
+                            jsStatus.innerHTML += '<p style="color: red;">✗ CSS file is not accessible (Status: ' + response.status + ')</p>';
+                        }
+                    })
+                    .catch(error => {
+                        jsStatus.innerHTML += '<p style="color: red;">✗ Error accessing CSS file: ' + error.message + '</p>';
+                    });
+            })
+            .then(() => {
+                // Try to dynamically import the main JavaScript module
+                return import('/assets/index-CCamSkAb.js')
+                    .then(() => {
+                        reactStatus.innerHTML = '<p style="color: green;">✓ React app module loaded successfully</p>';
+                        reactStatus.innerHTML += '<p>The React app should now be rendering. If you see this message and the login page is not visible, there may be a JavaScript error in the browser console.</p>';
+                    })
+                    .catch(error => {
+                        reactStatus.innerHTML = '<p style="color: red;">✗ Error loading React app module: ' + error.message + '</p>';
+                        reactStatus.innerHTML += '<p>This could indicate an issue with the JavaScript bundle or a runtime error.</p>';
+                    });
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+#!/bin/bash
+# Netlify Deployment Script for TK999 Betting Platform
+
+echo "=================================="
+echo "TK999 Betting Platform Deployment"
+echo "=================================="
+
+echo "1. Preparing files for Netlify deployment..."
+
+# Ensure we're in the correct directory
+cd /Users/test/startups/deploy-68cc53904a126d00086a9168
+
+# Create a deployment-ready version
+echo "2. Creating deployment package..."
+
+# Check if we need to build anything - for this static app we just need the files as-is
+echo "Files ready for deployment:"
+ls -la *.html *.js *.css netlify.toml assets/ 2>/dev/null
+
+echo ""
+echo "3. Deployment Instructions:"
+echo "   1. Go to https://app.netlify.com/drop"
+echo "   2. Drag and drop the files in this directory (except node_modules/)"
+echo "   3. Or use the zip file: tk999-betting-platform.zip"
+echo ""
+echo "   Alternative (if you have Netlify CLI):"
+echo "   1. Install Netlify CLI: npm install -g netlify-cli"
+echo "   2. Run: netlify deploy --dir=. --prod"
+echo ""
+echo "   Your app is ready for deployment!"
+echo "   URL: http://localhost:8080 (for local testing)"
+echo "   Live site will be available at your Netlify URL after deployment."
+echo ""
+echo "Important files for deployment:"
+echo "✓ index.html - Main app file"
+echo "✓ assets/ - Contains main application bundle"
+echo "✓ netlify.toml - Configuration file for proper routing"
+echo "✓ All other static assets"

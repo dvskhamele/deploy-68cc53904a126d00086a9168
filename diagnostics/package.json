@@ -1,0 +1,13 @@
+{
+  "name": "tk999-diagnostics",
+  "version": "1.0.0",
+  "description": "Diagnostics for TK999 deployment issues",
+  "main": "diagnose.js",
+  "scripts": {
+    "diagnose": "node diagnose.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["diagnostics", "tk999"],
+  "author": "TK999 Team",
+  "license": "MIT"
+}

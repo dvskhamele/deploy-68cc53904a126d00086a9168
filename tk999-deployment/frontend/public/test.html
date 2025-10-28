@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Header Test</title>
+    <link rel="stylesheet" href="/src/index.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-gradient-primary shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center">
+                <a href="/dashboard" class="text-2xl md:text-3xl font-bold text-white flex items-center group">
+                    <span class="text-2xl md:text-3xl mr-2 group-hover:rotate-12 transition-transform duration-300">🎲</span>
+                    TK999
+                </a>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <div class="bg-gradient-success text-white px-5 py-3 rounded-full font-bold flex items-center shadow-lg">
+                    <span class="mr-2 text-xl">💰</span>
+                    <span class="text-lg">1,000 BDT</span>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl shadow-lg">
+                        M
+                    </div>
+                    <div class="hidden sm:block">
+                        <p class="text-white font-semibold">User Name</p>
+                        <p class="text-blue-100 text-sm">Member</p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-3">
+                    <a href="/dashboard" class="btn btn-success flex flex-col items-center justify-center w-16 h-16 rounded-2xl transform transition-all duration-300 hover:scale-110" title="Dashboard">
+                        <span class="text-2xl">📊</span>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    
+                    <a href="/matches" class="btn btn-primary flex flex-col items-center justify-center w-16 h-16 rounded-2xl transform transition-all duration-300 hover:scale-110" title="Matches">
+                        <span class="text-2xl">⚽</span>
+                        <span class="text-xs mt-1">Matches</span>
+                    </a>
+                    
+                    <button class="btn btn-danger flex flex-col items-center justify-center w-16 h-16 rounded-2xl transform transition-all duration-300 hover:scale-110" title="Logout">
+                        <span class="text-2xl">🚪</span>
+                        <span class="text-xs mt-1">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>

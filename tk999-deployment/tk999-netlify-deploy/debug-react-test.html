@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Debug Test</title>
+</head>
+<body>
+    <div id="root">
+        <div style="padding: 20px; text-align: center;">
+            <h1>TK999 Debug Test</h1>
+            <p>If you can see this message, the React app is not initializing properly.</p>
+            <p>Common causes:</p>
+            <ul style="text-align: left; display: inline-block;">
+                <li>JavaScript errors preventing React from rendering</li>
+                <li>Missing DOM elements that React expects</li>
+                <li>Incorrect bundle paths</li>
+            </ul>
+            <p>Check the browser console for specific error messages.</p>
+        </div>
+    </div>
+    
+    <!-- Load the React app -->
+    <script type="module" crossorigin src="/assets/index-CCamSkAb.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CmJebkS1.css">
+    
+    <!-- Simple fallback test -->
+    <script>
+        // Test if the main bundle loads
+        setTimeout(() => {
+            const rootElement = document.getElementById('root');
+            if (rootElement && rootElement.children.length === 1) {
+                // Only our debug content is visible, React didn't render
+                console.log('React app did not render - checking for errors');
+            } else {
+                console.log('React app appears to be rendering');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

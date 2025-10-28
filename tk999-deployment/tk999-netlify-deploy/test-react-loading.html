@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 App Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        #test-root {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>TK999 App Test</h1>
+    
+    <div id="test-root">
+        <p>Testing if React app loads correctly...</p>
+    </div>
+    
+    <div id="root">
+        <!-- This is where the React app should mount -->
+    </div>
+    
+    <script>
+        // Test if the DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const testRoot = document.getElementById('test-root');
+            testRoot.innerHTML = '<div class="test-result success">✅ DOM loaded successfully</div>';
+        });
+        
+        // Test if the main script loads
+        window.addEventListener('load', function() {
+            const testRoot = document.getElementById('test-root');
+            testRoot.innerHTML += '<div class="test-result success">✅ Window loaded successfully</div>';
+        });
+    </script>
+    
+    <!-- Load the React app -->
+    <script type="module" crossorigin src="./assets/index-CCamSkAb.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CmJebkS1.css">
+</body>
+</html>

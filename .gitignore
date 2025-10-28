@@ -1,0 +1,10 @@
+node_modules/\n*.log\n.env*\ndist/\nbuild/\n.vscode/\n.idea/\n*.swp\n*.swo\n.DS_Store\nThumbs.db\n.netlify/\n.qodo/\nserver/
+
+# Local Netlify folder
+.netlify
+.vercel
+.next/
+tk999-backend.zip
+tk999-deployment.zip
+tk999-backend.zip
+tk999-deployment.zip

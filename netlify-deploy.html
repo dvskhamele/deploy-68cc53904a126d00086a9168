@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Betting Platform Deployment</title>
+    <script src="https://app.netlify.com/alloc/v1/multi-file-alloc.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .status { 
+            background: #4CAF50; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 20px 0;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .btn:hover { background: #45a049; }
+        #progress { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 TK999 Betting Platform</h1>
+        <h2>Deployment to Netlify</h2>
+        
+        <div class="status">
+            <h3>✅ READY FOR DEPLOYMENT</h3>
+            <p>Platform files prepared and ready to deploy</p>
+        </div>
+        
+        <div id="progress">Uploading files to Netlify...</div>
+        <button id="deployBtn" class="btn">🚀 Deploy to Netlify</button>
+        
+        <div style="margin-top: 30px; text-align: left;">
+            <h3>Deployment Information:</h3>
+            <p><strong>Package:</strong> tk999-betting-platform.zip</p>
+            <p><strong>Files included:</strong> All necessary files for betting platform</p>
+            <p><strong>Configured:</strong> Proper routing with netlify.toml</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('deployBtn').addEventListener('click', function() {
+            // Show progress
+            document.getElementById('progress').style.display = 'block';
+            
+            // Create deployment via Netlify's drag-and-drop interface
+            const zipUrl = 'tk999-betting-platform.zip';
+            const netlifyDropUrl = 'https://app.netlify.com/drop';
+            
+            // Open the Netlify drop interface in a new tab
+            window.open(netlifyDropUrl, '_blank');
+            
+            // Show success message
+            setTimeout(function() {
+                document.getElementById('progress').innerHTML = 
+                    '<div style="background: #2196F3; color: white; padding: 15px; border-radius: 5px; margin: 20px 0;">✅ Opened Netlify deployment interface! Please drag and drop the ZIP file.</div>';
+                
+                // Provide the zip file download link as well
+                const downloadLink = document.createElement('a');
+                downloadLink.href = zipUrl;
+                downloadLink.download = 'tk999-betting-platform.zip';
+                downloadLink.textContent = 'Click here if the ZIP file did not automatically download';
+                downloadLink.style.display = 'block';
+                downloadLink.style.margin = '10px auto';
+                downloadLink.style.padding = '10px';
+                downloadLink.style.background = '#2196F3';
+                downloadLink.style.color = 'white';
+                downloadLink.style.borderRadius = '5px';
+                downloadLink.style.width = '80%';
+                downloadLink.style.textAlign = 'center';
+                
+                document.getElementById('progress').appendChild(downloadLink);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

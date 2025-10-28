@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TK999 - Test JavaScript Loading</title>
+</head>
+<body>
+    <h1>Testing TK999 JavaScript Loading</h1>
+    <div id="test-result">Checking JavaScript...</div>
+    <div id="root"></div>
+
+    <script>
+        // Test if the main JavaScript file loads correctly
+        const testResult = document.getElementById('test-result');
+        
+        // Try to detect if React is loaded
+        setTimeout(() => {
+            if (typeof window.React !== 'undefined') {
+                testResult.innerHTML = '<p style="color: green;">✅ React is loaded!</p>';
+            } else {
+                testResult.innerHTML = '<p style="color: orange;">⚠️ React not detected in global scope, but this is normal for production builds.</p>';
+            }
+            
+            // Try to load the main app script and check if it executes
+            const script = document.createElement('script');
+            script.src = '/assets/index-CCamSkAb.js';
+            script.onload = function() {
+                testResult.innerHTML += '<p style="color: green;">✅ Main JavaScript file loaded successfully!</p>';
+                
+                // Give it a moment to potentially render
+                setTimeout(() => {
+                    const rootContent = document.getElementById('root').innerHTML;
+                    if (rootContent && rootContent.trim() !== '') {
+                        testResult.innerHTML += '<p style="color: green;">✅ React app rendered content!</p>';
+                        testResult.innerHTML += '<p>Root content: ' + rootContent.substring(0, 100) + '...</p>';
+                    } else {
+                        testResult.innerHTML += '<p style="color: orange;">⚠️ React app loaded but no content rendered yet. This is expected for async apps.</p>';
+                    }
+                }, 1000);
+            };
+            script.onerror = function() {
+                testResult.innerHTML += '<p style="color: red;">❌ Failed to load main JavaScript file!</p>';
+            };
+            document.head.appendChild(script);
+        }, 1000);
+    </script>
+</body>
+</html>

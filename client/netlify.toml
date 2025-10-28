@@ -1,0 +1,19 @@
+[build]
+  base = "client/"
+  publish = "dist/"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/test*"
+  to = "/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/beautiful-solid-*"
+  to = "/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

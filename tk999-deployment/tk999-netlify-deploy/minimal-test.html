@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TK999 Minimal Test</title>
+</head>
+<body>
+    <h1>TK999 Minimal Test</h1>
+    <div id="root">
+        <p>If you see this, React hasn't loaded.</p>
+    </div>
+
+    <script>
+        // Simple test to see if the JS file is accessible
+        fetch('/assets/index-CCamSkAb.js')
+            .then(response => response.text())
+            .then(data => {
+                console.log('JS file loaded, length:', data.length);
+                // Create a simple test to see if we can execute some of the JS
+                const script = document.createElement('script');
+                script.textContent = `
+                    try {
+                        // This is a simple test - just see if we can execute code
+                        console.log('Script execution test');
+                        document.getElementById('root').innerHTML = '<p style="color: green;">JavaScript executed successfully!</p>';
+                    } catch (e) {
+                        console.error('Script execution error:', e);
+                        document.getElementById('root').innerHTML = '<p style="color: red;">Script execution failed: ' + e.message + '</p>';
+                    }
+                `;
+                document.head.appendChild(script);
+            })
+            .catch(error => {
+                console.error('Failed to load JS file:', error);
+                document.getElementById('root').innerHTML = '<p style="color: red;">Failed to load JS: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>

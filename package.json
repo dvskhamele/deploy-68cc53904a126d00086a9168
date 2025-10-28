@@ -1,0 +1,27 @@
+{
+  "name": "tk999-betting-app",
+  "version": "1.0.0",
+  "description": "TK999 Betting Platform - Complete betting application with matches and betting functionality",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -l 3006 -s .",
+    "start:root": "serve -l 3006 -s .",
+    "start:dist": "serve -l 3006 -s client/dist",
+    "build": "echo 'Building TK999 Betting App'",
+    "deploy": "./netlify-deploy.sh"
+  },
+  "keywords": [
+    "betting",
+    "sports",
+    "react",
+    "tk999"
+  ],
+  "author": "TK999 Team",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "14.2.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}

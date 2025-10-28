@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK999 Debug Console</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .console {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .console-line {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .console-error {
+            color: #f48771;
+        }
+        .console-warn {
+            color: #cca700;
+        }
+        .console-info {
+            color: #75beff;
+        }
+        .console-success {
+            color: #4ec9b0;
+        }
+        .status-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .status-card h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .test-button {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #005a9e;
+            transform: translateY(-2px);
+        }
+        .test-button:active {
+            transform: translateY(0);
+        }
+        .react-status {
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .react-mounted {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .react-not-mounted {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TK999 React App Debug Console</h1>
+            <p>This page monitors the React application for errors and status updates.</p>
+            
+            <div id="react-status" class="react-status react-not-mounted">
+                React App Status: Not Mounted
+            </div>
+            
+            <div class="status-panel">
+                <div class="status-card">
+                    <h3>Application Resources</h3>
+                    <div id="resource-status">
+                        <p>Checking resources...</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <h3>JavaScript Status</h3>
+                    <div id="js-status">
+                        <p>Checking JavaScript...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <button class="test-button" onclick="runBasicTest()">Run Basic Test</button>
+                <button class="test-button" onclick="checkResources()">Check Resources</button>
+                <button class="test-button" onclick="simulateReactMount()">Simulate React Mount</button>
+                <button class="test-button" onclick="clearConsole()">Clear Console</button>
+            </div>
+        </div>
+        
+        <div class="console" id="debug-console">
+            <div class="console-line console-info">[INFO] Debug console initialized</div>
+            <div class="console-line console-info">[INFO] Waiting for React app to mount...</div>
+        </div>
+    </div>
+
+    <script>
+        // Console logging functions
+        function logToConsole(message, type = 'info') {
+            const consoleElement = document.getElementById('debug-console');
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            line.textContent = `[${type.toUpperCase()}] ${message}`;
+            consoleElement.appendChild(line);
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+        
+        function clearConsole() {
+            const consoleElement = document.getElementById('debug-console');
+            consoleElement.innerHTML = '';
+            logToConsole('Console cleared', 'info');
+        }
+        
+        // Override console methods to capture output
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const originalConsoleInfo = console.info;
+        
+        console.log = function(...args) {
+            logToConsole(args.join(' '), 'info');
+            originalConsoleLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            logToConsole(args.join(' '), 'error');
+            originalConsoleError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            logToConsole(args.join(' '), 'warn');
+            originalConsoleWarn.apply(console, args);
+        };
+        
+        console.info = function(...args) {
+            logToConsole(args.join(' '), 'info');
+            originalConsoleInfo.apply(console, args);
+        };
+        
+        // Check if React has mounted
+        function checkReactMount() {
+            const rootElement = document.getElementById('root');
+            const statusElement = document.getElementById('react-status');
+            
+            if (rootElement && rootElement.children.length > 0) {
+                // Check if any child has meaningful content
+                let hasContent = false;
+                for (let i = 0; i < rootElement.children.length; i++) {
+                    const child = rootElement.children[i];
+                    if (child.textContent.trim() !== '' || child.children.length > 0) {
+                        hasContent = true;
+                        break;
+                    }
+                }
+                
+                if (hasContent) {
+                    statusElement.textContent = 'React App Status: Successfully Mounted';
+                    statusElement.className = 'react-status react-mounted';
+                    logToConsole('React app successfully mounted', 'success');
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Periodically check React mount status
+        setInterval(checkReactMount, 1000);
+        
+        // Resource checking
+        async function checkResources() {
+            logToConsole('Checking application resources...', 'info');
+            
+            const resources = [
+                { name: 'Main Bundle', url: '/assets/index-CCamSkAb.js' },
+                { name: 'Vendor Bundle', url: '/assets/vendor-nf7bT_Uh.js' },
+                { name: 'CSS Styles', url: '/assets/index-CmJebkS1.css' },
+                { name: 'Vite Icon', url: '/vite.svg' }
+            ];
+            
+            const resourceStatus = document.getElementById('resource-status');
+            resourceStatus.innerHTML = '';
+            
+            for (const resource of resources) {
+                try {
+                    const response = await fetch(resource.url);
+                    const status = response.ok ? '✅ Loaded' : `❌ Failed (${response.status})`;
+                    resourceStatus.innerHTML += `<p>${resource.name}: ${status}</p>`;
+                    logToConsole(`${resource.name}: ${response.ok ? 'Loaded successfully' : `Failed with status ${response.status}`}`, response.ok ? 'success' : 'error');
+                } catch (error) {
+                    resourceStatus.innerHTML += `<p>${resource.name}: ❌ Error (${error.message})</p>`;
+                    logToConsole(`${resource.name}: Error - ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        // JavaScript status check
+        function checkJavaScriptStatus() {
+            const jsStatus = document.getElementById('js-status');
+            jsStatus.innerHTML = '';
+            
+            // Check if required globals exist
+            const globals = ['React', 'ReactDOM'];
+            for (const global of globals) {
+                if (window[global]) {
+                    jsStatus.innerHTML += `<p>${global}: ✅ Available</p>`;
+                    logToConsole(`${global} is available in global scope`, 'success');
+                } else {
+                    jsStatus.innerHTML += `<p>${global}: ❌ Not Available</p>`;
+                    logToConsole(`${global} is not available in global scope`, 'warn');
+                }
+            }
+            
+            // Check if modules are loaded
+            const modules = document.querySelectorAll('script[type="module"]');
+            jsStatus.innerHTML += `<p>Modules: ${modules.length} detected</p>`;
+            logToConsole(`Found ${modules.length} module scripts`, 'info');
+        }
+        
+        // Run basic test
+        function runBasicTest() {
+            logToConsole('Running basic diagnostic test...', 'info');
+            checkResources();
+            checkJavaScriptStatus();
+            
+            // Check React mount after a delay
+            setTimeout(() => {
+                if (!checkReactMount()) {
+                    logToConsole('React app did not mount within expected timeframe', 'warn');
+                    logToConsole('This could indicate a JavaScript error or incorrect bundle configuration', 'warn');
+                }
+            }, 3000);
+        }
+        
+        // Simulate React mount (for testing purposes)
+        function simulateReactMount() {
+            logToConsole('Simulating React mount...', 'info');
+            const rootElement = document.getElementById('root');
+            if (rootElement) {
+                rootElement.innerHTML = `
+                    <div style="padding: 20px; text-align: center; background: #f0f8ff; border-radius: 10px;">
+                        <h2>✨ React App Simulation ✨</h2>
+                        <p>This is a simulated React component for debugging purposes.</p>
+                        <p>In a real deployment, this would be replaced by the actual TK999 application.</p>
+                    </div>
+                `;
+                checkReactMount();
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', function() {
+            logToConsole('Page loaded successfully', 'info');
+            setTimeout(() => {
+                checkResources();
+                checkJavaScriptStatus();
+            }, 1000);
+        });
+        
+        // Check for any immediate errors
+        window.addEventListener('error', function(event) {
+            logToConsole(`Global error: ${event.message} at ${event.filename}:${event.lineno}:${event.colno}`, 'error');
+        });
+        
+        window.addEventListener('unhandledrejection', function(event) {
+            logToConsole(`Unhandled promise rejection: ${event.reason}`, 'error');
+        });
+    </script>
+    
+    <!-- This is where the React app should mount -->
+    <div id="root"></div>
+    
+    <!-- Load the React app -->
+    <script type="module" crossorigin src="/assets/index-CCamSkAb.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-nf7bT_Uh.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CmJebkS1.css">
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TK999 Diagnostic</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>TK999 Application Diagnostic</h1>
+    
+    <div class="test-section">
+        <h2>File Access Tests</h2>
+        <div id="file-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>JavaScript Execution Test</h2>
+        <div id="js-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>React App Test</h2>
+        <div id="react-tests"></div>
+        <div id="root"></div>
+    </div>
+
+    <script>
+        const fileTests = document.getElementById('file-tests');
+        const jsTests = document.getElementById('js-tests');
+        const reactTests = document.getElementById('react-tests');
+        
+        // Test 1: Check index.html
+        fileTests.innerHTML += '<p>Testing index.html access...</p>';
+        fetch('/')
+            .then(response => {
+                if (response.ok) {
+                    fileTests.innerHTML += '<p class="success">✅ index.html accessible</p>';
+                } else {
+                    fileTests.innerHTML += '<p class="error">❌ index.html not accessible: ' + response.status + '</p>';
+                }
+            })
+            .catch(error => {
+                fileTests.innerHTML += '<p class="error">❌ Error accessing index.html: ' + error.message + '</p>';
+            });
+            
+        // Test 2: Check main JS file
+        fileTests.innerHTML += '<p>Testing main JS file access...</p>';
+        fetch('/assets/index-CCamSkAb.js')
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('HTTP ' + response.status);
+                }
+            })
+            .then(jsContent => {
+                fileTests.innerHTML += '<p class="success">✅ Main JS file accessible (' + jsContent.length + ' characters)</p>';
+                
+                // Test JavaScript execution
+                jsTests.innerHTML += '<p>Testing JavaScript execution...</p>';
+                const script = document.createElement('script');
+                script.textContent = `
+                    window.jsExecutionTest = true;
+                    console.log('JavaScript execution test successful');
+                `;
+                document.head.appendChild(script);
+                
+                setTimeout(() => {
+                    if (window.jsExecutionTest) {
+                        jsTests.innerHTML += '<p class="success">✅ JavaScript executes correctly</p>';
+                        
+                        // Try to load the actual React app
+                        reactTests.innerHTML += '<p>Loading React application...</p>';
+                        const reactScript = document.createElement('script');
+                        reactScript.src = '/assets/index-CCamSkAb.js';
+                        reactScript.onload = function() {
+                            reactTests.innerHTML += '<p class="success">✅ React JS loaded</p>';
+                            
+                            // Wait for React to render
+                            setTimeout(() => {
+                                const rootContent = document.getElementById('root').innerHTML;
+                                if (rootContent && rootContent.trim() !== '') {
+                                    reactTests.innerHTML += '<p class="success">✅ React app rendered content</p>';
+                                    reactTests.innerHTML += '<p class="info">Content length: ' + rootContent.length + ' characters</p>';
+                                } else {
+                                    reactTests.innerHTML += '<p class="warning">⚠️ React JS loaded but no content rendered</p>';
+                                    reactTests.innerHTML += '<p class="info">Check browser console for JavaScript errors</p>';
+                                }
+                            }, 2000);
+                        };
+                        reactScript.onerror = function(e) {
+                            reactTests.innerHTML += '<p class="error">❌ React JS failed to load: ' + e.message + '</p>';
+                        };
+                        document.head.appendChild(reactScript);
+                    } else {
+                        jsTests.innerHTML += '<p class="error">❌ JavaScript execution failed</p>';
+                    }
+                }, 100);
+            })
+            .catch(error => {
+                fileTests.innerHTML += '<p class="error">❌ Main JS file not accessible: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>

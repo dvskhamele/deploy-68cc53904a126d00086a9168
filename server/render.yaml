@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: tk999-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    domains:
+      - host: tk999-api
